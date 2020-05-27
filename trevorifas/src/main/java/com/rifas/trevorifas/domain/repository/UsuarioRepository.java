@@ -7,5 +7,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import com.rifas.trevorifas.domain.entity.Usuario;
 
 public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
-	Optional<Usuario> findByNome(String nome);
+	Optional<Usuario> findByEmail(String email);
 }

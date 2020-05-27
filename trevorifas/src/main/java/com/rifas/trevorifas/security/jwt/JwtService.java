@@ -29,13 +29,13 @@ public class JwtService {
     	Instant instant = dataHoraExpiracao.atZone(ZoneId.systemDefault()).toInstant();
     	Date data =  Date.from(instant);
     	
-    	HashMap<String, Object> claims = new HashMap<>();
-    	claims.put("email", "marcos@gmail.com");
+    	/*HashMap<String, Object> claims = new HashMap<>();
+    	claims.put("email", "marcos@gmail.com");*/
     	return Jwts
     			.builder()
     			.setSubject(usuario.getEmail())
     			.setExpiration(data)
-    			.setClaims(claims)
+    			//.setClaims(claims)
     			.signWith(SignatureAlgorithm.HS512,chaveAssinatura)
     			.compact();
     }

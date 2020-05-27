@@ -7,6 +7,8 @@ import java.util.Set;
 
 import javax.transaction.Transactional;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.support.BeanDefinitionDsl.Role;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -18,6 +20,7 @@ import com.rifas.trevorifas.domain.entity.Perfil;
 import com.rifas.trevorifas.domain.entity.Usuario;
 import com.rifas.trevorifas.domain.repository.PerfilRepository;
 import com.rifas.trevorifas.domain.repository.UsuarioRepository;
+import com.rifas.trevorifas.exception.SenhaInvalidaException;
 
 import lombok.RequiredArgsConstructor;
 
@@ -31,22 +34,34 @@ public class UsuarioServiceImpl implements UserDetailsService {
 
 	private final PerfilRepository perfilRepository;
 
+	public UserDetails autenticar(Usuario usuario) {
+		UserDetails userDetails = loadUserByUsername(usuario.getEmail());
+		boolean isSenha = encoder.matches(usuario.getSenha(), userDetails.getPassword());
+		if (isSenha) {
+			return userDetails;
+		}
+		throw new SenhaInvalidaException();
+	}
+
 	@Override
-	public UserDetails loadUserByUsername(String nome) throws UsernameNotFoundException {
-		Usuario usuario = repository.findByNome(nome)
+	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+		Usuario usuario = repository.findByEmail(email)
 				.orElseThrow(() -> new UsernameNotFoundException("Usuario não encontrado"));
-		String[] roles = new String[] { "ADMIN", "USER" };
-		return User.builder().username(usuario.getEmail()).password(encoder.encode(usuario.getSenha())).roles(roles)
-				.build();
+		List<String> listaRoles = new ArrayList<>();
+	
+		usuario.getPerfis().forEach(role -> listaRoles.add(role.getNome()));
+		String[] roles = listaRoles.stream().toArray(n -> new String[n]);
+		
+		return User.builder().username(usuario.getEmail()).password(usuario.getSenha()).roles(roles).build();
 	}
 
 	@Transactional
 	public Usuario salvar(Usuario usuario) {
-        List<String> listaNomePerfil = new  ArrayList<String>();
-	    usuario.getPerfis().forEach(perfil -> {
-	    	listaNomePerfil.add(perfil.getNome());
-	    });
-		
+		List<String> listaNomePerfil = new ArrayList<String>();
+		usuario.getPerfis().forEach(perfil -> {
+			listaNomePerfil.add(perfil.getNome());
+		});
+
 		Set<Perfil> perfis = perfilRepository.findByNomeIn(listaNomePerfil);
 		Usuario usuarioFinal = Usuario.builder().email(usuario.getEmail()).nome(usuario.getNome())
 				.senha(usuario.getSenha()).perfis(perfis).build();
