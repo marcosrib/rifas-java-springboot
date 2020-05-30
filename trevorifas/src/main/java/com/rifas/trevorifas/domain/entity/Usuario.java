@@ -2,6 +2,7 @@ package com.rifas.trevorifas.domain.entity;
 
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -41,7 +42,7 @@ public class Usuario {
 	private String senha;
 	
 
-	@ManyToMany
+	@ManyToMany(cascade = CascadeType.MERGE)
 	@JoinTable(
 	  name = "usuario_perfil", 
 	  joinColumns = @JoinColumn(name = "usuario_id"), 

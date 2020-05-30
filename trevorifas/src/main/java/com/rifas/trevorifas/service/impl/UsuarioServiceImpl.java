@@ -1,8 +1,11 @@
 package com.rifas.trevorifas.service.impl;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 import javax.transaction.Transactional;
@@ -15,6 +18,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import com.rifas.trevorifas.domain.entity.Perfil;
 import com.rifas.trevorifas.domain.entity.Usuario;
@@ -65,6 +69,30 @@ public class UsuarioServiceImpl implements UserDetailsService {
 		Set<Perfil> perfis = perfilRepository.findByNomeIn(listaNomePerfil);
 		Usuario usuarioFinal = Usuario.builder().email(usuario.getEmail()).nome(usuario.getNome())
 				.senha(usuario.getSenha()).perfis(perfis).build();
+		return repository.save(usuarioFinal);
+	}
+	
+	@Transactional
+	public Usuario editar(Usuario usuario) {
+	    Usuario usuarioFinal = repository.findById(usuario.getId())
+	    		                   .orElseThrow(() -> new UsernameNotFoundException("Usuario não encontrado"));
+	    usuarioFinal.setEmail(usuario.getEmail());
+	    usuarioFinal.setNome(usuario.getNome());
+	    
+	    if(!StringUtils.isEmpty(usuario.getSenha())) {
+	    	String senhaCriptografada = usuario.getSenha();
+	    	usuario.setSenha(senhaCriptografada);
+	    }
+	    
+	    List<String> listaNomePerfil = new ArrayList<String>();
+		usuario.getPerfis().forEach(perfil -> {
+			listaNomePerfil.add(perfil.getNome());
+		});
+
+		Set<Perfil> perfis = perfilRepository.findByNomeIn(listaNomePerfil);
+	
+	    usuarioFinal.setPerfis(perfis);
+	    
 		return repository.save(usuarioFinal);
 	}
 

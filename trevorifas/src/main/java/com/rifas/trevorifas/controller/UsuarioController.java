@@ -5,6 +5,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -41,18 +42,21 @@ public class UsuarioController {
 	@PostMapping("/auth")
 	@ResponseStatus(HttpStatus.CREATED)
 	public TokenDTO autenticar(@RequestBody CredenciasDTO credencias) {
-		
+
 		System.err.println("fvmkfmk");
 		try {
-			Usuario usuario = Usuario.builder()
-					.email(credencias.getEmail())
-					.senha(credencias.getSenha())
-					.build();
+			Usuario usuario = Usuario.builder().email(credencias.getEmail()).senha(credencias.getSenha()).build();
 			service.autenticar(usuario);
 			String token = jwtservice.gerarToken(usuario);
-            return new TokenDTO(token);
+			return new TokenDTO(token);
 		} catch (UsernameNotFoundException | SenhaInvalidaException e) {
-            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
+			throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
 		}
+	}
+
+	@PutMapping("/editar")
+	@ResponseStatus(HttpStatus.OK)
+	public Usuario editar(@RequestBody Usuario usuario) {
+		return service.editar(usuario);
 	}
 }
