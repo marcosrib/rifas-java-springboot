@@ -42,7 +42,6 @@ public class UsuarioController {
 	@ResponseStatus(HttpStatus.CREATED)
 	public TokenDTO autenticar(@RequestBody CredenciasDTO credencias) {
 
-		System.err.println("fvmkfmk");
 		try {
 			Usuario usuario = Usuario.builder().email(credencias.getEmail()).senha(credencias.getSenha()).build();
 			service.autenticar(usuario);
