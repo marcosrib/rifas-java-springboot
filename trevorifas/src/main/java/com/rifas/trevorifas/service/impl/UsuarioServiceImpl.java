@@ -80,8 +80,8 @@ public class UsuarioServiceImpl implements UserDetailsService {
 	    usuarioFinal.setNome(usuario.getNome());
 	    
 	    if(!StringUtils.isEmpty(usuario.getSenha())) {
-	    	String senhaCriptografada = usuario.getSenha();
-	    	usuario.setSenha(senhaCriptografada);
+	    	String senhaCriptografada = encoder.encode(usuario.getSenha());
+	    	usuarioFinal.setSenha(senhaCriptografada);
 	    }
 	    
 	    List<String> listaNomePerfil = new ArrayList<String>();
