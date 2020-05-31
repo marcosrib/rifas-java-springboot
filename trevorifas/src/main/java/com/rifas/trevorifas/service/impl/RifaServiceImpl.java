@@ -48,6 +48,7 @@ public class RifaServiceImpl implements RifaService {
 				 .titulo(dto.getTitulo())
 				 .valor(new BigDecimal(dto.getValor()))
 				 .descricao(dto.getDescricao())
+				 .tipoRifa(dto.getTipoRifa())
 				 .build();
 		
 	}

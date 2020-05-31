@@ -21,4 +21,6 @@ public class Ponto {
 	@Column( length = 5)
 	private  String rifas;
 	
+	@Column( length = 5)
+	private  String sorteio;
 }
