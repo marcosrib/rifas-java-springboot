@@ -4,6 +4,9 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
@@ -36,10 +39,10 @@ public class RifaServiceImpl implements RifaService {
 	}
 	
 	private Rifa converte(RifaDTO dto) {
-		 
+		
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
 	    LocalDateTime dataSorteio =  LocalDateTime.parse(dto.getDataSorteio(), formatter);
-	    
+	  
 		return Rifa.builder()
 				 .dataSorteio(dataSorteio)
 				 .titulo(dto.getTitulo())
@@ -47,6 +50,13 @@ public class RifaServiceImpl implements RifaService {
 				 .descricao(dto.getDescricao())
 				 .build();
 		
+	}
+
+	@Override
+	public Page<Rifa> listarPoIdUsuario(Integer idUsuario, Integer page) {
+		int count = 50;
+		Pageable pages = PageRequest.of(page, count);
+		return rifaRepository.findAllRifaWithPagination(idUsuario, pages);
 	}
 
 }
