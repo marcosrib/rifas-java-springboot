@@ -4,14 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import javax.transaction.Transactional;
-
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import com.rifas.trevorifas.domain.entity.Perfil;
@@ -52,8 +51,7 @@ public class UsuarioServiceImpl implements UserDetailsService {
 		
 		return User.builder().username(usuario.getEmail()).password(usuario.getSenha()).roles(roles).build();
 	}
-
-	@Transactional
+    @Transactional
 	public Usuario salvar(Usuario usuario) {
 		List<String> listaNomePerfil = new ArrayList<String>();
 		usuario.getPerfis().forEach(perfil -> {

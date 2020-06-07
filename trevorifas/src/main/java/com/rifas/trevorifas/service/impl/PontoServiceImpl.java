@@ -5,9 +5,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.rifas.trevorifas.EnumRifa;
-import com.rifas.trevorifas.controller.dto.ResponsePontosDTO;
+import com.rifas.trevorifas.controller.dto.PontoResponseDTO;
 import com.rifas.trevorifas.domain.entity.Ponto;
 import com.rifas.trevorifas.domain.entity.Rifa;
 import com.rifas.trevorifas.domain.entity.UsuarioRifaPonto;
@@ -29,15 +30,16 @@ public class PontoServiceImpl implements PontoService {
 	private final UsuarioRifaPontoRepository usuarioRifaPontoRepository;
 
 	@Override
-	public List<ResponsePontosDTO> listaPontoPorIdRifa(Long idRifa) {
+	@Transactional(readOnly = true)
+	public List<PontoResponseDTO> listaPontoPorIdRifa(Long idRifa) {
 
-		List<ResponsePontosDTO> listaResponse = new ArrayList<>();
+		List<PontoResponseDTO> listaResponse = new ArrayList<>();
 
 		List<Ponto> listaPontos = pontoRepository.findAll();
 
 		Rifa rifa = rifaRepository.findById(idRifa).get();
 
-		List<ResponsePontosDTO> pontos = filtraPontosPorRifa(listaPontos, rifa);
+		List<PontoResponseDTO> pontos = filtraPontosPorRifa(listaPontos, rifa);
 
 		List<UsuarioRifaPonto> urpLista = usuarioRifaPontoRepository.findByRifa(rifa);
 
@@ -51,10 +53,10 @@ public class PontoServiceImpl implements PontoService {
 					.filter(filter -> filter.getPonto().getId().equals(p.getIdPonto())).findAny().orElse(null);
 		
 			if (resultadoFiltro != null) {
-				listaResponse.add(new ResponsePontosDTO(p.getIdPonto(), p.getPontos(),
+				listaResponse.add(new PontoResponseDTO(p.getIdPonto(), p.getPontos(),
 						resultadoFiltro.getUsuario().getId().toString(), resultadoFiltro.getValor().toString()));
 			} else {
-				listaResponse.add(new ResponsePontosDTO(p.getIdPonto(), p.getPontos(), null, null));
+				listaResponse.add(new PontoResponseDTO(p.getIdPonto(), p.getPontos(), null, null));
 			}
 
 		});
@@ -62,15 +64,15 @@ public class PontoServiceImpl implements PontoService {
 		return listaResponse;
 	}
 
-	private List<ResponsePontosDTO> filtraPontosPorRifa(List<Ponto> listaPostos, Rifa rifa) {
+	private List<PontoResponseDTO> filtraPontosPorRifa(List<Ponto> listaPostos, Rifa rifa) {
 
 		List<Ponto> result = new ArrayList<>();
-		List<ResponsePontosDTO> listaPontosReponse = new ArrayList<>();
+		List<PontoResponseDTO> listaPontosReponse = new ArrayList<>();
 
 		if (rifa.getTipoRifa().equals(EnumRifa.RIFA)) {
 			result = listaPostos.stream().filter(p -> p.getRifas() != null).collect(Collectors.toList());
 			result.forEach(p -> {
-				listaPontosReponse.add(new ResponsePontosDTO(p.getId(), p.getRifas(), null, null));
+				listaPontosReponse.add(new PontoResponseDTO(p.getId(), p.getRifas(), null, null));
 			});
 		}
 		return listaPontosReponse;
