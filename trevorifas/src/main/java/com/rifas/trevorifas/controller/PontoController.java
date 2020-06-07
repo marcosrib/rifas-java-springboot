@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.rifas.trevorifas.domain.entity.Ponto;
+import com.rifas.trevorifas.controller.dto.ResponsePontosDTO;
 import com.rifas.trevorifas.service.PontoService;
 
 import lombok.RequiredArgsConstructor;
@@ -23,7 +23,7 @@ public class PontoController {
 	
 	@GetMapping("/{id}")
 	@ResponseStatus(HttpStatus.OK)
-	public List<Ponto> listar(@PathVariable Long id) {
+	public List<ResponsePontosDTO> listar(@PathVariable Long id) {
 		return service.listaPontoPorIdRifa(id);
 	}
 }

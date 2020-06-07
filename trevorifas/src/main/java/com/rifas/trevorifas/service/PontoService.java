@@ -4,10 +4,10 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.rifas.trevorifas.domain.entity.Ponto;
+import com.rifas.trevorifas.controller.dto.ResponsePontosDTO;
 
 @Service
 public interface PontoService {
   
-	List<Ponto> listaPontoPorIdRifa(Long idRifa);
+	List<ResponsePontosDTO> listaPontoPorIdRifa(Long idRifa);
 }
