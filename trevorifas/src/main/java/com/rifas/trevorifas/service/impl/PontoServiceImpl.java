@@ -47,12 +47,12 @@ public class PontoServiceImpl implements PontoService {
 
 		pontos.forEach(p -> {
 
-			UsuarioRifaPonto resultado = urpLista.stream()
+			UsuarioRifaPonto resultadoFiltro = urpLista.stream()
 					.filter(filter -> filter.getPonto().getId().equals(p.getIdPonto())).findAny().orElse(null);
 		
-			if (resultado != null) {
+			if (resultadoFiltro != null) {
 				listaResponse.add(new ResponsePontosDTO(p.getIdPonto(), p.getPontos(),
-						resultado.getUsuario().getId().toString(), resultado.getValor().toString()));
+						resultadoFiltro.getUsuario().getId().toString(), resultadoFiltro.getValor().toString()));
 			} else {
 				listaResponse.add(new ResponsePontosDTO(p.getIdPonto(), p.getPontos(), null, null));
 			}
