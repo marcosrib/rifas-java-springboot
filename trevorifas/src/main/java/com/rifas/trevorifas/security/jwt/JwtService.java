@@ -1,9 +1,11 @@
 package com.rifas.trevorifas.security.jwt;
 
+import java.io.UnsupportedEncodingException;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
+import java.util.HashMap;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -28,13 +30,14 @@ public class JwtService {
     	Instant instant = dataHoraExpiracao.atZone(ZoneId.systemDefault()).toInstant();
     	Date data =  Date.from(instant);
     	
-    	/*HashMap<String, Object> claims = new HashMap<>();
-    	claims.put("email", "marcos@gmail.com");*/
+    	HashMap<String, Object> claims = new HashMap<>();
+    	claims.put("email", usuario.getEmail());
+    	claims.put("nome", usuario.getNome());
+    	
     	return Jwts
     			.builder()
     			.setSubject(usuario.getEmail())
     			.setExpiration(data)
-    			//.setClaims(claims)
     			.signWith(SignatureAlgorithm.HS512,chaveAssinatura)
     			.compact();
     }
@@ -51,6 +54,8 @@ public class JwtService {
     	try {
 		Claims claims =	obterClaims(token);
 		Date dataExpiracao = claims.getExpiration();
+		System.err.println(token);
+		System.err.println(dataExpiracao);
 		LocalDateTime data = 
 				dataExpiracao.toInstant()
 				.atZone(ZoneId.systemDefault()).toLocalDateTime();
