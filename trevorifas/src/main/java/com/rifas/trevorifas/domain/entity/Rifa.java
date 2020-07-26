@@ -17,7 +17,7 @@ import javax.persistence.PrePersist;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.rifas.trevorifas.EnumRifa;
+import com.rifas.trevorifas.domain.enums.EnumRifa;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

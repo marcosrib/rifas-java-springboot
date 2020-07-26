@@ -7,11 +7,11 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.rifas.trevorifas.EnumRifa;
 import com.rifas.trevorifas.controller.dto.PontoResponseDTO;
 import com.rifas.trevorifas.domain.entity.Ponto;
 import com.rifas.trevorifas.domain.entity.Rifa;
 import com.rifas.trevorifas.domain.entity.UsuarioRifaPonto;
+import com.rifas.trevorifas.domain.enums.EnumRifa;
 import com.rifas.trevorifas.domain.repository.PontoRepository;
 import com.rifas.trevorifas.domain.repository.RifaRepository;
 import com.rifas.trevorifas.domain.repository.UsuarioRifaPontoRepository;

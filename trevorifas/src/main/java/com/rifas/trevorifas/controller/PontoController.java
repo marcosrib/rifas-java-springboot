@@ -38,12 +38,12 @@ public class PontoController {
 		return service.listaPontoPorIdRifa(id);
 	}
 
-	@GetMapping("/news")
-	public String broadcastNews() {
-		Object[] o = { "nome", "marcos", };
+	@GetMapping("/message/{msg}")
+	public String broadcastNews(@PathVariable("msg") String msg) {
+		
 
-		simpleMessagingTemplate.convertAndSend("/topic/messages",o);
-		logger.debug("Post not found");
+		simpleMessagingTemplate.convertAndSend("/topic/messages",msg);
+		logger.info("Mensagem enviada");
 		return "cd,ldf,vldflv,";
 	}
 

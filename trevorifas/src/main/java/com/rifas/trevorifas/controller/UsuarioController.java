@@ -39,7 +39,7 @@ public class UsuarioController {
 	}
 
 	@PostMapping("/auth")
-	@ResponseStatus(HttpStatus.CREATED)
+	@ResponseStatus(HttpStatus.OK)
 	public TokenDTO autenticar(@RequestBody CredenciasDTO credencias) {
 
 		try {

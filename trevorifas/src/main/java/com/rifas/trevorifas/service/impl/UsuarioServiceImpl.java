@@ -15,6 +15,8 @@ import org.springframework.util.StringUtils;
 
 import com.rifas.trevorifas.domain.entity.Perfil;
 import com.rifas.trevorifas.domain.entity.Usuario;
+import com.rifas.trevorifas.domain.enums.EnumPerfil;
+import com.rifas.trevorifas.domain.enums.EnumRifa;
 import com.rifas.trevorifas.domain.repository.PerfilRepository;
 import com.rifas.trevorifas.domain.repository.UsuarioRepository;
 import com.rifas.trevorifas.exception.SenhaInvalidaException;
@@ -54,13 +56,20 @@ public class UsuarioServiceImpl implements UserDetailsService {
     @Transactional
 	public Usuario salvar(Usuario usuario) {
 		List<String> listaNomePerfil = new ArrayList<String>();
-		usuario.getPerfis().forEach(perfil -> {
-			listaNomePerfil.add(perfil.getNome());
-		});
+		
+		if (usuario.getPerfis() != null) {
+			usuario.getPerfis().forEach(perfil -> listaNomePerfil.add(perfil.getNome()));
+		} else {
+			listaNomePerfil.add(EnumPerfil.USER.toString());
+		}
 
 		Set<Perfil> perfis = perfilRepository.findByNomeIn(listaNomePerfil);
-		Usuario usuarioFinal = Usuario.builder().email(usuario.getEmail()).nome(usuario.getNome())
-				.senha(usuario.getSenha()).perfis(perfis).build();
+		Usuario usuarioFinal = Usuario.builder()
+				.email(usuario.getEmail())
+				.nome(usuario.getNome())
+				.senha(usuario.getSenha())
+				.perfis(perfis)
+				.build();
 		return repository.save(usuarioFinal);
 	}
 	
