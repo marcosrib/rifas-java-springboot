@@ -11,5 +11,5 @@ public interface RifaService {
 
 	Rifa salvar(RifaDTO rifa);
 	
-	Page<Rifa> listarPoIdUsuario(Integer idUsuario, Integer page);
+	Page<Rifa> listaRifas(Integer page);
 }

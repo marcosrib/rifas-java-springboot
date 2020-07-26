@@ -11,10 +11,10 @@ import com.rifas.trevorifas.domain.entity.Rifa;
 public interface RifaRepository  extends JpaRepository<Rifa, Long>{
   
 	@Query(
-			  value = "SELECT * FROM rifa  where usuario_id = :id ORDER BY id",
-			  countQuery = "SELECT count(*) FROM rifa where usuario_id = :id ",
+			  value = "SELECT * FROM rifa  ORDER BY id",
+			  countQuery = "SELECT count(*) FROM rifa ",
 			  nativeQuery = true)
-	Page<Rifa> findAllRifaWithPagination(@Param("id") Integer id, Pageable pageable);
+	Page<Rifa> findAllRifaWithPagination(Pageable pageable);
 	
 
 }

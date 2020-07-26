@@ -31,7 +31,8 @@ public class RifaController {
 	
 	@GetMapping
 	@ResponseStatus(HttpStatus.OK)
-	public Page<Rifa> listar(@RequestParam Integer id,@RequestParam Integer page) {
-		return service.listarPoIdUsuario(id, page);
+	public Page<Rifa> listar(@RequestParam Integer page) {
+		System.err.println(page);
+		return service.listaRifas(page);
 	}
 }

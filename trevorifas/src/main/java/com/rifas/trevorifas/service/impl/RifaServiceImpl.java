@@ -54,10 +54,10 @@ public class RifaServiceImpl implements RifaService {
 	}
 
 	@Override
-	public Page<Rifa> listarPoIdUsuario(Integer idUsuario, Integer page) {
-		int count = 50;
-		Pageable pages = PageRequest.of(page, count);
-		return rifaRepository.findAllRifaWithPagination(idUsuario, pages);
+	public Page<Rifa> listaRifas(Integer page) {
+		int count = 10;
+		Pageable pages = PageRequest.of(page - 1, count);
+		return rifaRepository.findAllRifaWithPagination(pages);
 	}
 
 }
