@@ -9,9 +9,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class PontoResponseDTO {
 	private Integer idPonto;
-	private String pontos;
+	private String  pontos;
 	private String idUsuario;
 	private String valor;
+	private boolean pontoEscolhido;
 	
 	
 }

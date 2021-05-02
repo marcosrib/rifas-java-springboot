@@ -4,17 +4,7 @@ import java.math.BigDecimal;
 
 import java.time.LocalDateTime;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.PrePersist;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.rifas.trevorifas.domain.enums.EnumRifa;
@@ -37,7 +27,11 @@ public class Rifa {
 	
 	@Column(name = "data_criacao",  nullable = false)
 	private LocalDateTime dataCriacao;
-	
+
+
+	@Column(name = "data_atualizacao")
+	private LocalDateTime dataAtualizacao;
+
 	@Column(name = "data_sorteio", nullable = false)
 	private LocalDateTime dataSorteio;
 	
@@ -48,7 +42,10 @@ public class Rifa {
 	private String titulo;
 	
 	private String imagem;
-	
+
+	@Column(name = "quantidade_ponto", length = 10, nullable = false)
+	private Integer quantidadePonto;
+
 	@Column(name = "valor", precision = 10, scale = 2, nullable = false)
 	private BigDecimal valor;
 	
@@ -63,6 +60,11 @@ public class Rifa {
 	
 	@PrePersist
 	public void prePersist() {
+		dataCriacao = LocalDateTime.now();
+	}
+
+	@PreUpdate
+	public void preUpdate() {
 		dataCriacao = LocalDateTime.now();
 	}
 	

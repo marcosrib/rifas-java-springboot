@@ -20,4 +20,6 @@ public class RifaDTO {
 	private String valor;
 	
 	private EnumRifa tipoRifa;
+
+	private Integer quantidadePonto;
 }

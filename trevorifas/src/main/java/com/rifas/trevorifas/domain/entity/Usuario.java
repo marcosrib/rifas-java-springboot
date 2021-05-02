@@ -1,19 +1,9 @@
 package com.rifas.trevorifas.domain.entity;
 
+import java.time.LocalDateTime;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -48,4 +38,20 @@ public class Usuario {
 	@ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
 	@JoinTable(name = "usuario_perfil", joinColumns = @JoinColumn(name = "usuario_id"), inverseJoinColumns = @JoinColumn(name = "perfil_id"))
 	private Set<Perfil> perfis;
+
+	@Column(name = "data_criacao")
+	private LocalDateTime dataCriacao;
+
+	@Column(name = "data_atualizacao")
+	private LocalDateTime dataAtualizacao;
+
+	@PrePersist
+	public void prePersist() {
+		dataCriacao = LocalDateTime.now();
+	}
+
+	@PreUpdate
+	public void preUpdate() {
+		dataCriacao = LocalDateTime.now();
+	}
 }

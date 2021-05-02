@@ -1,23 +1,16 @@
 package com.rifas.trevorifas.domain.entity;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import lombok.Data;
 
 @Entity
 @Data
 @Table(name = "usuario_rifa_ponto")
-public class UsuarioRifaPonto {
+public class PontoUsuarioRifa {
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -30,11 +23,26 @@ public class UsuarioRifaPonto {
 	@JoinColumn(name = "rifa_id")
 	private Rifa rifa;
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "ponto_id")
-	private Ponto ponto;
+	@Column( length = 10, nullable = false)
+	private String ponto;
 
 	@Column(name = "valor", precision = 10, scale = 2, nullable = false)
 	private BigDecimal valor;
+
+	@Column(name = "data_criacao")
+	private LocalDateTime dataCriacao;
+
+	@Column(name = "data_atualizacao")
+	private LocalDateTime dataAtualizacao;
+
+	@PrePersist
+	public void prePersist() {
+      dataCriacao = LocalDateTime.now();
+	}
+
+    @PreUpdate
+	public void preUpdate() {
+		dataCriacao = LocalDateTime.now();
+	}
 
 }
