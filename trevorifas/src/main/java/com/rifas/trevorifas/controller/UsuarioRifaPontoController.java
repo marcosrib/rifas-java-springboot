@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.rifas.trevorifas.controller.dto.UsuarioRifaPontoDTO;
 import com.rifas.trevorifas.controller.dto.UsuarioRifaPontoResponseDTO;
-import com.rifas.trevorifas.domain.entity.PontoUsuarioRifa;
+import com.rifas.trevorifas.domain.entity.Ponto;
 import com.rifas.trevorifas.service.PontoUsuarioRifaService;
 
 import lombok.RequiredArgsConstructor;
@@ -25,7 +25,7 @@ public class UsuarioRifaPontoController {
 	@ResponseStatus(HttpStatus.CREATED)
 	public UsuarioRifaPontoResponseDTO salvar(@RequestBody UsuarioRifaPontoDTO dto) {
 		  
-		PontoUsuarioRifa urp = service.salvar(dto);
+		Ponto urp = service.salvar(dto);
 		  
 		return UsuarioRifaPontoResponseDTO
 		  		.builder()

@@ -9,8 +9,8 @@ import lombok.Data;
 
 @Entity
 @Data
-@Table(name = "usuario_rifa_ponto")
-public class PontoUsuarioRifa {
+@Table(name = "pontos")
+public class Ponto {
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -28,6 +28,9 @@ public class PontoUsuarioRifa {
 
 	@Column(name = "valor", precision = 10, scale = 2, nullable = false)
 	private BigDecimal valor;
+
+	@Column(name = "ponto_escolhido",  nullable = false)
+	private boolean pontoEscolhido;
 
 	@Column(name = "data_criacao")
 	private LocalDateTime dataCriacao;

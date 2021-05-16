@@ -8,10 +8,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.rifas.trevorifas.controller.dto.UsuarioRifaPontoDTO;
-import com.rifas.trevorifas.domain.entity.PontoUsuarioRifa;
+import com.rifas.trevorifas.domain.entity.Ponto;
 import com.rifas.trevorifas.domain.repository.RifaRepository;
 import com.rifas.trevorifas.domain.repository.UsuarioRepository;
-import com.rifas.trevorifas.domain.repository.PontoRifaRepository;
+import com.rifas.trevorifas.domain.repository.PontoRepository;
 import com.rifas.trevorifas.service.PontoUsuarioRifaService;
 
 import lombok.RequiredArgsConstructor;
@@ -20,7 +20,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class PontoUsuarioRifaServiceImpl implements PontoUsuarioRifaService {
 
-	private final PontoRifaRepository repository;
+	private final PontoRepository repository;
 	
 	private final RifaRepository rifaRepository;
 	
@@ -28,7 +28,7 @@ public class PontoUsuarioRifaServiceImpl implements PontoUsuarioRifaService {
 	
 	@Override
 	@Transactional
-	public PontoUsuarioRifa salvar(UsuarioRifaPontoDTO dto) {
+	public Ponto salvar(UsuarioRifaPontoDTO dto) {
 		/*
 		Ponto ponto = pontoRepository.findById(dto.getIdPonto()).get();
 		
@@ -36,7 +36,7 @@ public class PontoUsuarioRifaServiceImpl implements PontoUsuarioRifaService {
 		
 		Usuario usuario = usuarioRepository.findById(dto.getIdUsuario()).get();
 		;*/
-		PontoUsuarioRifa urp = new PontoUsuarioRifa();
+		Ponto urp = new Ponto();
 		//urp.setPonto(ponto);
 		//urp.setRifa(rifa);
 		//urp.setUsuario(usuario);
@@ -46,7 +46,8 @@ public class PontoUsuarioRifaServiceImpl implements PontoUsuarioRifaService {
 	}
 
 	@Override
-	public List<PontoUsuarioRifa> buscarPontoUsuarioRifaPorIdRifa(Long idRifa) {
-		return repository.findByIdRifa(idRifa);
+	public List<Ponto> buscarPontoUsuarioRifaPorIdRifa(Long idRifa) {
+		//return repository.findByIdRifa(idRifa);
+		return null;
 	}
 }
