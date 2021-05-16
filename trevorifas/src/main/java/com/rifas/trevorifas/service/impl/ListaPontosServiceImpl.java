@@ -45,6 +45,10 @@ public class ListaPontosServiceImpl implements ListaPontosService {
     }
 
     private Optional<Ponto> verificarListaDePontosEstaVaziaEFiltrarPorIdPontos(List<Ponto> lista, int ponto ) {
-             return  lista.stream().filter(p -> p.getPonto().equals(ponto)).findAny();
+             return  lista.stream().filter(p -> p.getPonto().equals(adicionaZeroNaAEquerdaNumeroMenorQueDez(ponto))).findAny();
+    }
+
+    private String adicionaZeroNaAEquerdaNumeroMenorQueDez(int numero) {
+        return (numero < 10) ? "0" + numero : String.valueOf(numero);
     }
 }

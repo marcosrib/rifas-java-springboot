@@ -3,9 +3,9 @@ package com.rifas.trevorifas.controller.dto;
 import lombok.Data;
 
 @Data
-public class UsuarioRifaPontoDTO {
+public class PontoDTO {
 	
-   private Integer idPonto;
+   private String ponto;
    private Long idRifa;
    private Integer idUsuario;
    private String valor;

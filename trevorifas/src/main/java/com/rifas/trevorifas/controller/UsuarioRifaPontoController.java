@@ -7,10 +7,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.rifas.trevorifas.controller.dto.UsuarioRifaPontoDTO;
+import com.rifas.trevorifas.controller.dto.PontoDTO;
 import com.rifas.trevorifas.controller.dto.UsuarioRifaPontoResponseDTO;
 import com.rifas.trevorifas.domain.entity.Ponto;
-import com.rifas.trevorifas.service.PontoUsuarioRifaService;
+import com.rifas.trevorifas.service.PontoService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -19,11 +19,11 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class UsuarioRifaPontoController {
 
-	private final PontoUsuarioRifaService service;
+	private final PontoService service;
 
 	@PostMapping("/salvar")
 	@ResponseStatus(HttpStatus.CREATED)
-	public UsuarioRifaPontoResponseDTO salvar(@RequestBody UsuarioRifaPontoDTO dto) {
+	public UsuarioRifaPontoResponseDTO salvar(@RequestBody PontoDTO dto) {
 		  
 		Ponto urp = service.salvar(dto);
 		  
