@@ -1,6 +1,7 @@
 package com.rifas.trevorifas.controller;
 
 
+import com.rifas.trevorifas.config.FileStorageConfig;
 import com.rifas.trevorifas.controller.dto.PontoDTO;
 import com.rifas.trevorifas.controller.dto.PontoResponseDTO;
 import com.rifas.trevorifas.domain.entity.Ponto;
