@@ -49,6 +49,7 @@ public class RifaServiceImpl implements RifaService {
 				 .valor(new BigDecimal(dto.getValor()))
 				 .descricao(dto.getDescricao())
 				 .tipoRifa(dto.getTipoRifa())
+				 .imagem(dto.getImagem())
 				 .quantidadePonto(dto.getQuantidadePonto())
 				 .build();
 		

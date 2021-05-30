@@ -23,7 +23,9 @@ public class FileStorageServiceImpl implements FileStorageService {
         this.fileStorageLocation = Paths.get(fileStorageConfig.getUploadDir()).toAbsolutePath().normalize();
 
         try {
-            Files.createDirectory(this.fileStorageLocation);
+            if (!Files.exists(this.fileStorageLocation)) {
+                Files.createDirectory(this.fileStorageLocation);
+            }
         } catch (Exception ex) {
             throw new ArmazenamentoArquivoException("Erro ao criar  pasta" + ex.getMessage());
         }
