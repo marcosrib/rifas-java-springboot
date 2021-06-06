@@ -2,8 +2,11 @@ package com.rifas.trevorifas.service.files.impl;
 
 import com.rifas.trevorifas.config.FileStorageConfig;
 import com.rifas.trevorifas.exception.ArmazenamentoArquivoException;
+import com.rifas.trevorifas.exception.RegraNegocioException;
 import com.rifas.trevorifas.service.files.service.FileStorageService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -46,5 +49,22 @@ public class FileStorageServiceImpl implements FileStorageService {
         } catch (Exception ex) {
             throw new ArmazenamentoArquivoException("Erro ao salvar arquivo" + ex.getMessage());
         }
+    }
+
+    @Override
+    public Resource buscarImagem(String nomeImagem) {
+        try {
+           Path localImagem = this.fileStorageLocation.resolve(nomeImagem).normalize();
+           Resource resource = new UrlResource(localImagem.toUri());
+           if (resource.exists()) {
+               return resource;
+           } else {
+               throw new RegraNegocioException("Imagem não encontrada");
+           }
+
+        } catch (Exception ex) {
+            throw new RegraNegocioException("Imagem não encontrada");
+        }
+
     }
 }
