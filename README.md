@@ -11,7 +11,7 @@
 
 Projeto desenvolvido para crontole de rifas.
 
-Neste projeto foi desenvolvido as Apis para integração com aplicativo mobile utilizado spring boot.
+Neste projeto foi desenvolvido as Apis para integração com aplicativo mobile utilizando spring boot.
 
 ## :gear: Funcionalidades:
 
