@@ -30,13 +30,8 @@ public class RifaController {
 
     @PostMapping("/criar")
     @ResponseStatus(HttpStatus.CREATED)
-    public Rifa salvar(@RequestParam("imagem") MultipartFile imagem, @RequestParam("dadosCadastrais") String dadosCadastrais) {
-        RifaDTO dto = null;
-        try {
-            dto = new ObjectMapper().readValue(dadosCadastrais, RifaDTO.class);
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
+    public Rifa salvar(@RequestParam("imagem") MultipartFile imagem, @RequestBody RifaDTO dto) {
+
         String nomeArquivo = fileStorageService.salvarArquivos(imagem);
         dto.setImagem(nomeArquivo);
         return service.salvar(dto);

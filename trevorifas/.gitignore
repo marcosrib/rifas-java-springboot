@@ -14,10 +14,16 @@ target/
 .sts4-cache
 
 ### IntelliJ IDEA ###
-.idea
+.idea/
+.idea_modules/
+.idea/sonarlint/
+.idea/misc.xml
+/.idea/jpa-buddy.xml
+
 *.iws
 *.iml
 *.ipr
+.jpb/
 
 ### NetBeans ###
 /nbproject/private/
