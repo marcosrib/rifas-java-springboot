@@ -14,11 +14,10 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import com.rifas.trevorifas.domain.entity.Perfil;
-import com.rifas.trevorifas.domain.entity.Usuario;
+import com.rifas.trevorifas.adapters.outbound.repositories.entity.UserEntity;
 import com.rifas.trevorifas.domain.enums.EnumPerfil;
-import com.rifas.trevorifas.domain.enums.EnumRifa;
-import com.rifas.trevorifas.domain.repository.PerfilRepository;
-import com.rifas.trevorifas.domain.repository.UsuarioRepository;
+import com.rifas.trevorifas.adapters.outbound.repositories.profiles.ProfileRepository;
+import com.rifas.trevorifas.adapters.outbound.repositories.users.UserRepository;
 import com.rifas.trevorifas.exception.SenhaInvalidaException;
 
 import lombok.RequiredArgsConstructor;
@@ -29,13 +28,13 @@ public class UsuarioServiceImpl implements UserDetailsService {
 
 	private final PasswordEncoder encoder;
 
-	private final UsuarioRepository repository;
+	private final UserRepository repository;
 
-	private final PerfilRepository perfilRepository;
+	private final ProfileRepository profileRepository;
 
-	public UserDetails autenticar(Usuario usuario) {
-		UserDetails userDetails = loadUserByUsername(usuario.getEmail());
-		boolean isSenha = encoder.matches(usuario.getSenha(), userDetails.getPassword());
+	public UserDetails autenticar(UserEntity userEntity) {
+		UserDetails userDetails = loadUserByUsername(userEntity.getEmail());
+		boolean isSenha = encoder.matches(userEntity.getSenha(), userDetails.getPassword());
 		if (isSenha) {
 			return userDetails;
 		}
@@ -44,57 +43,57 @@ public class UsuarioServiceImpl implements UserDetailsService {
 
 	@Override
 	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-		Usuario usuario = repository.findByEmail(email)
+		UserEntity userEntity = repository.findByEmail(email)
 				.orElseThrow(() -> new UsernameNotFoundException("Usuario não encontrado"));
 		List<String> listaRoles = new ArrayList<>();
 	
-		usuario.getPerfis().forEach(role -> listaRoles.add(role.getNome()));
+		userEntity.getPerfis().forEach(role -> listaRoles.add(role.getNome()));
 		String[] roles = listaRoles.stream().toArray(n -> new String[n]);
 		
-		return User.builder().username(usuario.getEmail()).password(usuario.getSenha()).roles(roles).build();
+		return User.builder().username(userEntity.getEmail()).password(userEntity.getSenha()).roles(roles).build();
 	}
     @Transactional
-	public Usuario salvar(Usuario usuario) {
+	public UserEntity salvar(UserEntity userEntity) {
 		List<String> listaNomePerfil = new ArrayList<String>();
 		
-		if (usuario.getPerfis() != null) {
-			usuario.getPerfis().forEach(perfil -> listaNomePerfil.add(perfil.getNome()));
+		if (userEntity.getPerfis() != null) {
+			userEntity.getPerfis().forEach(perfil -> listaNomePerfil.add(perfil.getNome()));
 		} else {
 			listaNomePerfil.add(EnumPerfil.USER.toString());
 		}
 
-		Set<Perfil> perfis = perfilRepository.findByNomeIn(listaNomePerfil);
-		Usuario usuarioFinal = Usuario.builder()
-				.email(usuario.getEmail())
-				.nome(usuario.getNome())
-				.senha(usuario.getSenha())
+		Set<Perfil> perfis = profileRepository.findByNomeIn(listaNomePerfil);
+		UserEntity userEntityFinal = UserEntity.builder()
+				.email(userEntity.getEmail())
+				.nome(userEntity.getNome())
+				.senha(userEntity.getSenha())
 				.perfis(perfis)
 				.build();
-		return repository.save(usuarioFinal);
+		return repository.save(userEntityFinal);
 	}
 	
 	@Transactional
-	public Usuario editar(Usuario usuario) {
-	    Usuario usuarioFinal = repository.findById(usuario.getId())
+	public UserEntity editar(UserEntity userEntity) {
+	    UserEntity userEntityFinal = repository.findById(userEntity.getId())
 	    		                   .orElseThrow(() -> new UsernameNotFoundException("Usuario não encontrado"));
-	    usuarioFinal.setEmail(usuario.getEmail());
-	    usuarioFinal.setNome(usuario.getNome());
+	    userEntityFinal.setEmail(userEntity.getEmail());
+	    userEntityFinal.setNome(userEntity.getNome());
 	    
-	    if(!StringUtils.isEmpty(usuario.getSenha())) {
-	    	String senhaCriptografada = encoder.encode(usuario.getSenha());
-	    	usuarioFinal.setSenha(senhaCriptografada);
+	    if(!StringUtils.isEmpty(userEntity.getSenha())) {
+	    	String senhaCriptografada = encoder.encode(userEntity.getSenha());
+	    	userEntityFinal.setSenha(senhaCriptografada);
 	    }
 	    
 	    List<String> listaNomePerfil = new ArrayList<String>();
-		usuario.getPerfis().forEach(perfil -> {
+		userEntity.getPerfis().forEach(perfil -> {
 			listaNomePerfil.add(perfil.getNome());
 		});
 
-		Set<Perfil> perfis = perfilRepository.findByNomeIn(listaNomePerfil);
+		Set<Perfil> perfis = profileRepository.findByNomeIn(listaNomePerfil);
 	
-	    usuarioFinal.setPerfis(perfis);
+	    userEntityFinal.setPerfis(perfis);
 	    
-		return repository.save(usuarioFinal);
+		return repository.save(userEntityFinal);
 	}
 
 }

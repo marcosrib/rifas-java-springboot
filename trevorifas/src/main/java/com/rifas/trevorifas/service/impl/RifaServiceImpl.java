@@ -12,9 +12,9 @@ import org.springframework.stereotype.Service;
 
 import com.rifas.trevorifas.controller.dto.RifaDTO;
 import com.rifas.trevorifas.domain.entity.Rifa;
-import com.rifas.trevorifas.domain.entity.Usuario;
+import com.rifas.trevorifas.adapters.outbound.repositories.entity.UserEntity;
 import com.rifas.trevorifas.domain.repository.RifaRepository;
-import com.rifas.trevorifas.domain.repository.UsuarioRepository;
+import com.rifas.trevorifas.adapters.outbound.repositories.users.UserRepository;
 import com.rifas.trevorifas.service.RifaService;
 
 import lombok.RequiredArgsConstructor;
@@ -25,16 +25,16 @@ public class RifaServiceImpl implements RifaService {
 
 	private final RifaRepository rifaRepository;
 	
-	private final UsuarioRepository usuarioRepository;
+	private final UserRepository usuarioRepository;
 	
 	@Override
 	public Rifa salvar(RifaDTO dto) {
 		
-	    Usuario usuario = usuarioRepository.findById(dto.getIdUsuario())
+	    UserEntity userEntity = usuarioRepository.findById(dto.getIdUsuario())
 		      .orElseThrow(() -> new UsernameNotFoundException("Usuario não encontrado"));
 	    
 		Rifa rifa =  converte(dto);
-		rifa.setUsuario(usuario);
+		rifa.setUserEntity(userEntity);
 		return rifaRepository.save(rifa);
 	}
 	

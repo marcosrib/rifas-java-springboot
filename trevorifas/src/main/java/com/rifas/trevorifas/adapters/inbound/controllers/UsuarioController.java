@@ -1,5 +1,9 @@
-package com.rifas.trevorifas.controller;
+package com.rifas.trevorifas.adapters.inbound.controllers;
 
+import com.rifas.trevorifas.adapters.inbound.controllers.request.UserRequest;
+import com.rifas.trevorifas.adapters.inbound.controllers.response.UserResponse;
+import com.rifas.trevorifas.application.core.usecases.CreateUserUseCase;
+import com.rifas.trevorifas.application.ports.in.CreateUserUseCasePort;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -13,7 +17,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import com.rifas.trevorifas.controller.dto.CredenciasDTO;
 import com.rifas.trevorifas.controller.dto.TokenDTO;
-import com.rifas.trevorifas.domain.entity.Usuario;
+import com.rifas.trevorifas.adapters.outbound.repositories.entity.UserEntity;
 import com.rifas.trevorifas.exception.SenhaInvalidaException;
 import com.rifas.trevorifas.security.jwt.JwtService;
 import com.rifas.trevorifas.service.impl.UsuarioServiceImpl;
@@ -22,20 +26,20 @@ import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping("/api/usuario")
-@RequiredArgsConstructor
 public class UsuarioController {
-
+	private final CreateUserUseCasePort createUserUseCasePort;
 	private final UsuarioServiceImpl service;
-	private final PasswordEncoder encoder;
 	private final JwtService jwtservice;
+	public UsuarioController(CreateUserUseCasePort createUserUseCasePort, UsuarioServiceImpl service,JwtService jwtservice) {
+		this.createUserUseCasePort = createUserUseCasePort;
+		this.service=service;
+		this.jwtservice = jwtservice;
+	}
 
-	@PostMapping("/criar")
+	@PostMapping("/create")
 	@ResponseStatus(HttpStatus.CREATED)
-	public Usuario salvar(@RequestBody Usuario usuario) {
-		String senhaCriptografada = encoder.encode(usuario.getSenha());
-		usuario.setSenha(senhaCriptografada);
-		return service.salvar(usuario);
-
+	public UserResponse create(@RequestBody UserRequest userRequest) {
+		return UserResponse.fromDomain(createUserUseCasePort.create(userRequest.toUserDomain()));
 	}
 
 	@PostMapping("/auth")
@@ -43,9 +47,9 @@ public class UsuarioController {
 	public TokenDTO autenticar(@RequestBody CredenciasDTO credencias) {
 
 		try {
-			Usuario usuario = Usuario.builder().email(credencias.getEmail()).senha(credencias.getSenha()).build();
-			service.autenticar(usuario);
-			String token = jwtservice.gerarToken(usuario);
+			UserEntity userEntity = UserEntity.builder().email(credencias.getEmail()).senha(credencias.getSenha()).build();
+			service.autenticar(userEntity);
+			String token = jwtservice.gerarToken(userEntity);
 			return new TokenDTO(token);
 		} catch (UsernameNotFoundException | SenhaInvalidaException e) {
 			throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
@@ -54,8 +58,8 @@ public class UsuarioController {
 
 	@PutMapping("/editar")
 	@ResponseStatus(HttpStatus.OK)
-	public Usuario editar(@RequestBody Usuario usuario) {
-		return service.editar(usuario);
+	public UserEntity editar(@RequestBody UserEntity userEntity) {
+		return service.editar(userEntity);
 	}
 	
 }

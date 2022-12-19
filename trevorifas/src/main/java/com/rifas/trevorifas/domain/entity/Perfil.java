@@ -1,5 +1,6 @@
 package com.rifas.trevorifas.domain.entity;
 
+import com.rifas.trevorifas.adapters.outbound.repositories.entity.UserEntity;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -35,6 +36,6 @@ public class Perfil {
 	
 	@ManyToMany(mappedBy = "perfis")
 	@JsonIgnore
-	private Set<Usuario> usuarios;
+	private Set<UserEntity> userEntities;
 	
 }

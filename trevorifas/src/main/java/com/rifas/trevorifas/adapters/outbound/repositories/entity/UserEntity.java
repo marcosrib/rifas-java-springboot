@@ -1,5 +1,7 @@
-package com.rifas.trevorifas.domain.entity;
+package com.rifas.trevorifas.adapters.outbound.repositories.entity;
 
+import com.rifas.trevorifas.domain.entity.Perfil;
+import com.rifas.trevorifas.domain.entity.Rifa;
 import java.time.LocalDateTime;
 import java.util.Set;
 
@@ -18,7 +20,7 @@ import lombok.Setter;
 @Setter
 @Entity
 @Table(name = "usuarios")
-public class Usuario {
+public class UserEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
@@ -32,7 +34,7 @@ public class Usuario {
 	@Column(name = "senha", nullable = false)
 	private String senha;
 
-	@OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "userEntity", cascade = CascadeType.ALL)
 	private Set<Rifa> rifas;
 
 	@ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)

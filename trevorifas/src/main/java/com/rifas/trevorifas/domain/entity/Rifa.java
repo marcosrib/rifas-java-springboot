@@ -1,5 +1,6 @@
 package com.rifas.trevorifas.domain.entity;
 
+import com.rifas.trevorifas.adapters.outbound.repositories.entity.UserEntity;
 import java.math.BigDecimal;
 
 import java.time.LocalDateTime;
@@ -56,7 +57,7 @@ public class Rifa {
 	@JsonIgnore
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "usuario_id", nullable = false)
-	private Usuario  usuario;
+	private UserEntity userEntity;
 	
 	@PrePersist
 	public void prePersist() {

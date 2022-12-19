@@ -31,7 +31,7 @@ public class UsuarioRifaPontoController {
 		  		.builder()
 		  		.id(urp.getId())
 		  		.idRifa(urp.getRifa().getId())
-		  		.idUsuario(urp.getUsuario().getId())
+		  		.idUsuario(urp.getUserEntity().getId())
 		  		.valor(urp.getValor())
 		  		.build();
 	}

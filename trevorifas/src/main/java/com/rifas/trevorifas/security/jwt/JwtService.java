@@ -1,6 +1,5 @@
 package com.rifas.trevorifas.security.jwt;
 
-import java.io.UnsupportedEncodingException;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -10,7 +9,7 @@ import java.util.HashMap;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import com.rifas.trevorifas.domain.entity.Usuario;
+import com.rifas.trevorifas.adapters.outbound.repositories.entity.UserEntity;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -24,19 +23,19 @@ public class JwtService {
     @Value("${security.jwt.assinatura}")
 	private String chaveAssinatura;
 	
-    public String gerarToken(Usuario usuario) {
+    public String gerarToken(UserEntity userEntity) {
     	Long expString = Long.valueOf(expiracao);
     	LocalDateTime dataHoraExpiracao = LocalDateTime.now().plusMinutes(expString);
     	Instant instant = dataHoraExpiracao.atZone(ZoneId.systemDefault()).toInstant();
     	Date data =  Date.from(instant);
     	
     	HashMap<String, Object> claims = new HashMap<>();
-    	claims.put("email", usuario.getEmail());
-    	claims.put("nome", usuario.getNome());
+    	claims.put("email", userEntity.getEmail());
+    	claims.put("nome", userEntity.getNome());
     	
     	return Jwts
     			.builder()
-    			.setSubject(usuario.getEmail())
+    			.setSubject(userEntity.getEmail())
     			.setExpiration(data)
     			.signWith(SignatureAlgorithm.HS512,chaveAssinatura)
     			.compact();

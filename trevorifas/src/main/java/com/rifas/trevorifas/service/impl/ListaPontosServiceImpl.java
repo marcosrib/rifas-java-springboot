@@ -9,7 +9,6 @@ import com.rifas.trevorifas.exception.RegraNegocioException;
 import com.rifas.trevorifas.service.ListaPontosService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 
 import java.util.List;
 import java.util.Optional;
@@ -36,7 +35,7 @@ public class ListaPontosServiceImpl implements ListaPontosService {
         List<PontoResponseDTO> pontos =  streamRangePontos.mapToObj(ponto -> {
             Optional<Ponto> pontoFiltrado = verificarListaDePontosEstaVaziaEFiltrarPorIdPontos(recuperaPontos, ponto);
             if(pontoFiltrado.isPresent()) {
-                return new PontoResponseDTO(pontoFiltrado.get().getId(), String.valueOf(ponto) , pontoFiltrado.get().getUsuario().getId(), null, pontoFiltrado.get().isPontoEscolhido());
+                return new PontoResponseDTO(pontoFiltrado.get().getId(), String.valueOf(ponto) , pontoFiltrado.get().getUserEntity().getId(), null, pontoFiltrado.get().isPontoEscolhido());
             }
             return new PontoResponseDTO(null, String.valueOf(ponto) , null, null, false);
         }).collect(Collectors.toList());

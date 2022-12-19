@@ -1,5 +1,6 @@
 package com.rifas.trevorifas.domain.entity;
 
+import com.rifas.trevorifas.adapters.outbound.repositories.entity.UserEntity;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
@@ -23,7 +24,7 @@ public class Ponto {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "usuario_id")
-	private Usuario usuario;
+	private UserEntity userEntity;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "rifa_id")
