@@ -1,6 +1,5 @@
-package com.rifas.trevorifas.domain.entity;
+package com.rifas.trevorifas.adapters.outbound.repositories.entity;
 
-import com.rifas.trevorifas.adapters.outbound.repositories.entity.UserEntity;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -25,7 +24,7 @@ import lombok.Setter;
 @Setter
 @Entity
 @Table(name = "perfils")
-public class Perfil {
+public class ProfileEntity {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,7 +33,7 @@ public class Perfil {
 	@Column(name = "nome", length = 30, nullable = false)
 	private String nome;
 	
-	@ManyToMany(mappedBy = "perfis")
+	@ManyToMany(mappedBy = "profiles")
 	@JsonIgnore
 	private Set<UserEntity> userEntities;
 	

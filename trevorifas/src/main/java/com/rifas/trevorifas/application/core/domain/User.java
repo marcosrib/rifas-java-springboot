@@ -1,8 +1,9 @@
 package com.rifas.trevorifas.application.core.domain;
 
 import com.rifas.trevorifas.adapters.outbound.repositories.entity.UserEntity;
-import com.rifas.trevorifas.domain.entity.Perfil;
+
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class User {
 
@@ -10,19 +11,19 @@ public class User {
   private String name;
   private String email;
   private String password;
-  private Set<Perfil> profiles;
+  private Set<Profile> profiles;
 
-  public User(String name) {
+  public User() {
   }
 
-  public User(String name, String email, String password, Set<Perfil> profiles) {
+  public User(String name, String email, String password, Set<Profile> profiles) {
     this.name = name;
     this.email = email;
     this.password = password;
     this.profiles = profiles;
   }
 
-  public User(Integer id, String name, String email, String password, Set<Perfil> profiles) {
+  public User(Integer id, String name, String email, String password, Set<Profile> profiles) {
     this.id = id;
     this.name = name;
     this.email = email;
@@ -62,15 +63,19 @@ public class User {
     this.password = password;
   }
 
-  public Set<Perfil> getProfiles() {
+  public Set<Profile> getProfiles() {
     return profiles;
   }
 
-  public void setProfiles(Set<Perfil> profiles) {
+  public void setProfiles(Set<Profile> profiles) {
     this.profiles = profiles;
   }
 
   public static User convertUserEntitytoUser(UserEntity userEntity) {
-   return  new User(userEntity.getId(), userEntity.getNome(), userEntity.getEmail(), userEntity.getSenha(), userEntity.getPerfis());
+    Set<Profile> profiles = userEntity.getProfiles().stream()
+        .map(profileEntity -> new Profile(profileEntity.getId(), profileEntity.getNome())).collect(
+            Collectors.toSet());
+    return new User(userEntity.getId(), userEntity.getNome(), userEntity.getEmail(),
+        userEntity.getSenha(), profiles);
   }
 }

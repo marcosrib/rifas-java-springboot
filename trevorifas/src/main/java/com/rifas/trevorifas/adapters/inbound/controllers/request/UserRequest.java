@@ -1,8 +1,7 @@
 package com.rifas.trevorifas.adapters.inbound.controllers.request;
 
-import com.rifas.trevorifas.adapters.inbound.controllers.response.UserResponse;
+import com.rifas.trevorifas.application.core.domain.Profile;
 import com.rifas.trevorifas.application.core.domain.User;
-import com.rifas.trevorifas.domain.entity.Perfil;
 import java.util.HashSet;
 import java.util.Set;
 import lombok.Data;
@@ -14,11 +13,11 @@ public class UserRequest {
   private String email;
   private String password;
 
-  private Set<Perfil> profiles;
+  private Set<Profile> profiles;
 
   public User toUserDomain() {
 
-    Set<Perfil> profilesList = new HashSet<>();
+    Set<Profile> profilesList = new HashSet<>();
     profilesList.addAll(profiles);
     return new User(name, email, password, profilesList);
   }

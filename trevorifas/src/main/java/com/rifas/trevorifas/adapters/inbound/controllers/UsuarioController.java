@@ -2,15 +2,15 @@ package com.rifas.trevorifas.adapters.inbound.controllers;
 
 import com.rifas.trevorifas.adapters.inbound.controllers.request.UserRequest;
 import com.rifas.trevorifas.adapters.inbound.controllers.response.UserResponse;
-import com.rifas.trevorifas.application.core.usecases.CreateUserUseCase;
-import com.rifas.trevorifas.application.ports.in.CreateUserUseCasePort;
+import com.rifas.trevorifas.application.ports.in.users.CreateUserUseCasePort;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
@@ -21,8 +21,6 @@ import com.rifas.trevorifas.adapters.outbound.repositories.entity.UserEntity;
 import com.rifas.trevorifas.exception.SenhaInvalidaException;
 import com.rifas.trevorifas.security.jwt.JwtService;
 import com.rifas.trevorifas.service.impl.UsuarioServiceImpl;
-
-import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping("/api/usuario")
@@ -38,8 +36,8 @@ public class UsuarioController {
 
 	@PostMapping("/create")
 	@ResponseStatus(HttpStatus.CREATED)
-	public UserResponse create(@RequestBody UserRequest userRequest) {
-		return UserResponse.fromDomain(createUserUseCasePort.create(userRequest.toUserDomain()));
+	public ResponseEntity<UserResponse>  create(@RequestBody UserRequest userRequest) {
+		return ResponseEntity.ok().body(UserResponse.fromDomain(createUserUseCasePort.create(userRequest.toUserDomain())));
 	}
 
 	@PostMapping("/auth")
@@ -59,7 +57,7 @@ public class UsuarioController {
 	@PutMapping("/editar")
 	@ResponseStatus(HttpStatus.OK)
 	public UserEntity editar(@RequestBody UserEntity userEntity) {
-		return service.editar(userEntity);
+		return null;
 	}
 	
 }

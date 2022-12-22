@@ -1,4 +1,4 @@
-package com.rifas.trevorifas.application.ports.out;
+package com.rifas.trevorifas.application.ports.out.users;
 
 import com.rifas.trevorifas.application.core.domain.User;
 

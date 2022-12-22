@@ -1,6 +1,5 @@
 package com.rifas.trevorifas.adapters.outbound.repositories.entity;
 
-import com.rifas.trevorifas.domain.entity.Perfil;
 import com.rifas.trevorifas.domain.entity.Rifa;
 import java.time.LocalDateTime;
 import java.util.Set;
@@ -39,7 +38,7 @@ public class UserEntity {
 
 	@ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
 	@JoinTable(name = "usuario_perfil", joinColumns = @JoinColumn(name = "usuario_id"), inverseJoinColumns = @JoinColumn(name = "perfil_id"))
-	private Set<Perfil> perfis;
+	private Set<ProfileEntity> profiles;
 
 	@Column(name = "data_criacao")
 	private LocalDateTime dataCriacao;

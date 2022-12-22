@@ -1,36 +1,41 @@
 package com.rifas.trevorifas.application.core.usecases;
 
+import com.rifas.trevorifas.application.core.domain.Profile;
 import com.rifas.trevorifas.application.core.domain.User;
-import com.rifas.trevorifas.application.ports.in.CreateUserUseCasePort;
-import com.rifas.trevorifas.application.ports.out.CreateUserAdapterPort;
+import com.rifas.trevorifas.application.ports.in.users.CreateUserUseCasePort;
+import com.rifas.trevorifas.application.ports.out.profiles.FindProfileAdapterPort;
+import com.rifas.trevorifas.application.ports.out.users.CreateUserAdapterPort;
 import com.rifas.trevorifas.domain.enums.EnumPerfil;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Component;
 
 
 public class CreateUserUseCase implements CreateUserUseCasePort {
 
   private final CreateUserAdapterPort createUserAdapterPort;
+
+  private final FindProfileAdapterPort findProfileAdapterPort;
   private final PasswordEncoder encoder;
 
-  public CreateUserUseCase(CreateUserAdapterPort createUserAdapterPort, PasswordEncoder encoder) {
+  public CreateUserUseCase(CreateUserAdapterPort createUserAdapterPort, FindProfileAdapterPort findProfileAdapterPort, PasswordEncoder encoder) {
     this.createUserAdapterPort = createUserAdapterPort;
+    this.findProfileAdapterPort = findProfileAdapterPort;
     this.encoder = encoder;
   }
 
   @Override
   public User create(User user) {
-    List<String> listProfilesByIds = new ArrayList<String>();
-
+    List<String> listProfilesName = new ArrayList<String>();
     if (!user.getProfiles().isEmpty()) {
-      user.getProfiles().forEach(perfil -> listProfilesByIds.add(perfil.getNome()));
+      user.getProfiles().forEach(profile -> listProfilesName.add(profile.getName()));
     } else {
-      listProfilesByIds.add(EnumPerfil.USER.toString());
+      listProfilesName.add(EnumPerfil.USER.toString());
     }
     String encryptPassword = encoder.encode(user.getPassword());
     user.setPassword(encryptPassword);
+    user.setProfiles( findProfileAdapterPort.findProfileByNameIn(listProfilesName));
     return createUserAdapterPort.create(user);
   }
 }
