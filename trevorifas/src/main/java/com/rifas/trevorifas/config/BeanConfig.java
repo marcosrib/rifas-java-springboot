@@ -1,7 +1,10 @@
 package com.rifas.trevorifas.config;
 
+import com.rifas.trevorifas.application.core.usecases.AuthUseCase;
 import com.rifas.trevorifas.application.core.usecases.CreateUserUseCase;
+import com.rifas.trevorifas.application.ports.in.auth.AuthUseCasePort;
 import com.rifas.trevorifas.application.ports.in.users.CreateUserUseCasePort;
+import com.rifas.trevorifas.application.ports.out.auth.AuthAdapterPort;
 import com.rifas.trevorifas.application.ports.out.profiles.FindProfileAdapterPort;
 import com.rifas.trevorifas.application.ports.out.users.CreateUserAdapterPort;
 import org.springframework.context.annotation.Bean;
@@ -15,5 +18,10 @@ public class BeanConfig {
   public CreateUserUseCasePort createUserUseCasePort(CreateUserAdapterPort createUserAdapterPort,
       FindProfileAdapterPort findProfileAdapterPort, PasswordEncoder encoder) {
     return new CreateUserUseCase(createUserAdapterPort, findProfileAdapterPort, encoder);
+  }
+
+  @Bean
+  public AuthUseCasePort authUseCasePort( AuthAdapterPort authAdapterPort){
+    return new AuthUseCase(authAdapterPort);
   }
 }

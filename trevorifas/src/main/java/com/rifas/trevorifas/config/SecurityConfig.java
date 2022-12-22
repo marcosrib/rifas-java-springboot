@@ -56,6 +56,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .authorizeRequests()
         .antMatchers(AUTH_WHITE_LIST)
         .permitAll()
+        .antMatchers("/api/auth/**")
+        .permitAll()
         .antMatchers("/api/rifa/**")
         .hasAnyRole("ADMIN", "USER")
         .antMatchers(HttpMethod.POST, "/api/usuario/**")
