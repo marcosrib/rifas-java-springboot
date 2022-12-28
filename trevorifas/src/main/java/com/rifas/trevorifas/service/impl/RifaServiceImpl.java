@@ -11,9 +11,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.rifas.trevorifas.controller.dto.RifaDTO;
-import com.rifas.trevorifas.domain.entity.Rifa;
+import com.rifas.trevorifas.adapters.outbound.repositories.entity.RaffleEntity;
 import com.rifas.trevorifas.adapters.outbound.repositories.entity.UserEntity;
-import com.rifas.trevorifas.domain.repository.RifaRepository;
+import com.rifas.trevorifas.adapters.outbound.repositories.Raffles.RaffleRepository;
 import com.rifas.trevorifas.adapters.outbound.repositories.users.UserRepository;
 import com.rifas.trevorifas.service.RifaService;
 
@@ -23,40 +23,40 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class RifaServiceImpl implements RifaService {
 
-	private final RifaRepository rifaRepository;
+	private final RaffleRepository rifaRepository;
 	
 	private final UserRepository usuarioRepository;
 	
 	@Override
-	public Rifa salvar(RifaDTO dto) {
+	public RaffleEntity salvar(RifaDTO dto) {
 		
 	    UserEntity userEntity = usuarioRepository.findById(dto.getIdUsuario())
 		      .orElseThrow(() -> new UsernameNotFoundException("Usuario não encontrado"));
 	    
-		Rifa rifa =  converte(dto);
+		RaffleEntity rifa =  converte(dto);
 		rifa.setUserEntity(userEntity);
 		return rifaRepository.save(rifa);
 	}
 	
-	private Rifa converte(RifaDTO dto) {
+	private RaffleEntity converte(RifaDTO dto) {
 		
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
 	    LocalDateTime dataSorteio =  LocalDateTime.parse(dto.getDataSorteio(), formatter);
 	  
-		return Rifa.builder()
-				 .dataSorteio(dataSorteio)
-				 .titulo(dto.getTitulo())
-				 .valor(new BigDecimal(dto.getValor()))
-				 .descricao(dto.getDescricao())
-				 .tipoRifa(dto.getTipoRifa())
-				 .imagem(dto.getImagem())
-				 .quantidadePonto(dto.getQuantidadePonto())
+		return RaffleEntity.builder()
+				 .raffleDate(dataSorteio)
+				 .title(dto.getTitulo())
+				 .value(new BigDecimal(dto.getValor()))
+				 .description(dto.getDescricao())
+				 .typeRaffle(dto.getTipoRifa())
+				 .imageName(dto.getImagem())
+				 .pointQuantity(dto.getQuantidadePonto())
 				 .build();
 		
 	}
 
 	@Override
-	public Page<Rifa> listaRifas(Integer page) {
+	public Page<RaffleEntity> listaRifas(Integer page) {
 		int count = 10;
 		Pageable pages = PageRequest.of(page - 1, count);
 		return rifaRepository.findAllRifaWithPagination(pages);

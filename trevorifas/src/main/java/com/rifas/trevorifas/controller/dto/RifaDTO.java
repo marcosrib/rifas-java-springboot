@@ -1,6 +1,6 @@
 package com.rifas.trevorifas.controller.dto;
 
-import com.rifas.trevorifas.domain.enums.EnumRifa;
+import com.rifas.trevorifas.application.core.domain.enums.EnumRifa;
 
 import lombok.Data;
 

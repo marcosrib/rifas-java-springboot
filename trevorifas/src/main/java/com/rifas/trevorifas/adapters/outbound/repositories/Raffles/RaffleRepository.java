@@ -1,20 +1,18 @@
-package com.rifas.trevorifas.domain.repository;
+package com.rifas.trevorifas.adapters.outbound.repositories.Raffles;
 
+import com.rifas.trevorifas.adapters.outbound.repositories.entity.RaffleEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 
-import com.rifas.trevorifas.domain.entity.Rifa;
-
-public interface RifaRepository  extends JpaRepository<Rifa, Long>{
+public interface RaffleRepository extends JpaRepository<RaffleEntity, Long>{
   
 	@Query(
 			  value = "SELECT * FROM rifa  ORDER BY id",
 			  countQuery = "SELECT count(*) FROM rifa ",
 			  nativeQuery = true)
-	Page<Rifa> findAllRifaWithPagination(Pageable pageable);
+	Page<RaffleEntity> findAllRifaWithPagination(Pageable pageable);
 	
 
 }

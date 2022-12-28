@@ -1,14 +1,12 @@
 package com.rifas.trevorifas.application.core.usecases;
 
-import com.rifas.trevorifas.application.core.domain.Profile;
 import com.rifas.trevorifas.application.core.domain.User;
 import com.rifas.trevorifas.application.ports.in.users.CreateUserUseCasePort;
 import com.rifas.trevorifas.application.ports.out.profiles.FindProfileAdapterPort;
 import com.rifas.trevorifas.application.ports.out.users.CreateUserAdapterPort;
-import com.rifas.trevorifas.domain.enums.EnumPerfil;
+import com.rifas.trevorifas.application.core.domain.enums.EnumPerfil;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 

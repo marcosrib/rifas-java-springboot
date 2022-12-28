@@ -4,12 +4,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import com.rifas.trevorifas.controller.dto.RifaDTO;
-import com.rifas.trevorifas.domain.entity.Rifa;
+import com.rifas.trevorifas.adapters.outbound.repositories.entity.RaffleEntity;
 
 @Service
 public interface RifaService {
 
-	Rifa salvar(RifaDTO rifa);
+	RaffleEntity salvar(RifaDTO rifa);
 	
-	Page<Rifa> listaRifas(Integer page);
+	Page<RaffleEntity> listaRifas(Integer page);
 }

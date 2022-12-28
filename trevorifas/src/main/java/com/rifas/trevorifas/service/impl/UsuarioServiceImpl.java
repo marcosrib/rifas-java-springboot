@@ -2,7 +2,6 @@ package com.rifas.trevorifas.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -10,12 +9,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.StringUtils;
 
-import com.rifas.trevorifas.adapters.outbound.repositories.entity.ProfileEntity;
 import com.rifas.trevorifas.adapters.outbound.repositories.entity.UserEntity;
-import com.rifas.trevorifas.domain.enums.EnumPerfil;
 import com.rifas.trevorifas.adapters.outbound.repositories.profiles.ProfileRepository;
 import com.rifas.trevorifas.adapters.outbound.repositories.users.UserRepository;
 import com.rifas.trevorifas.exception.SenhaInvalidaException;
