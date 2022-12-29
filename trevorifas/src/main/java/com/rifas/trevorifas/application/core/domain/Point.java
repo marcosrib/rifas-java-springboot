@@ -1,11 +1,8 @@
 package com.rifas.trevorifas.application.core.domain;
 
 import com.rifas.trevorifas.adapters.outbound.repositories.entity.PointEntity;
-import com.rifas.trevorifas.adapters.outbound.repositories.entity.UserEntity;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 public class Point {
 
@@ -18,87 +15,99 @@ public class Point {
 
   private BigDecimal value;
 
+   private boolean pointSelected;
+
   private LocalDateTime createAt;
 
   private LocalDateTime updateAt;
 
-  public Point(Integer userId, Long raffleId, String point, BigDecimal value) {
-    this.userId = userId;
-    this.raffleId = raffleId;
-    this.point = point;
-    this.value = value;
-  }
+    private Point() {
+    }
+    public static Point builder() {
+      return new Point();
+    }
 
-  public Point(Long id, Integer userId, Long raffleId, String point, BigDecimal value,
-      LocalDateTime createAt, LocalDateTime updateAt) {
-    this.id = id;
-    this.userId = userId;
-    this.raffleId = raffleId;
-    this.point = point;
-    this.value = value;
-    this.createAt = createAt;
-    this.updateAt = updateAt;
-  }
+    public Point id(Long id) {
+      this.id = id;
+      return this;
+    }
+
+    public Point userId(Integer userId) {
+      this.userId = userId;
+      return this;
+    }
+
+    public Point raffleId(Long raffleId) {
+      this.raffleId = raffleId;
+      return this;
+    }
+
+    public Point point(String point) {
+      this.point = point;
+      return this;
+    }
+
+    public Point value(BigDecimal value) {
+      this.value = value;
+      return this;
+    }
+
+    public Point pointSelected(boolean pointSelected) {
+      this.pointSelected = pointSelected;
+      return this;
+    }
+
+    public Point createAt(LocalDateTime createAt) {
+      this.createAt = createAt;
+      return this;
+    }
+
+    public Point updateAt(LocalDateTime updateAt) {
+      this.updateAt = updateAt;
+      return this;
+    }
 
   public Long getId() {
     return id;
-  }
-
-  public void setId(Long id) {
-    this.id = id;
   }
 
   public Integer getUserId() {
     return userId;
   }
 
-  public void setUserId(Integer userId) {
-    this.userId = userId;
-  }
-
   public Long getRaffleId() {
     return raffleId;
-  }
-
-  public void setRaffleId(Long raffleId) {
-    this.raffleId = raffleId;
   }
 
   public String getPoint() {
     return point;
   }
 
-  public void setPoint(String point) {
-    this.point = point;
-  }
-
   public BigDecimal getValue() {
     return value;
   }
 
-  public void setValue(BigDecimal value) {
-    this.value = value;
+  public boolean isPointSelected() {
+    return pointSelected;
   }
 
   public LocalDateTime getCreateAt() {
     return createAt;
   }
 
-  public void setCreateAt(LocalDateTime createAt) {
-    this.createAt = createAt;
-  }
-
   public LocalDateTime getUpdateAt() {
     return updateAt;
   }
 
-  public void setUpdateAt(LocalDateTime updateAt) {
-    this.updateAt = updateAt;
-  }
-
   public static Point convertPointEntityToUser(PointEntity point) {
 
-    return new Point(point.getId(), point.getUser().getId(), point.getRaffle().getId(),
-        point.getPoint(), point.getValue(), point.getCreateAt(), point.getUpdateAt());
+    return Point.builder()
+        .pointSelected(point.isPointSelected())
+        .point(point.getPoint())
+        .userId(point.getUser().getId())
+        .id(point.getId())
+        .raffleId(point.getRaffle().getId())
+        .value(point.getValue());
   }
+
 }

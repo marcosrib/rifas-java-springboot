@@ -15,6 +15,10 @@ public class PointRequest {
 
    public Point toPointDomain(){
 
-      return new Point(userId,raffleId, point, value);
+      return Point.builder()
+          .userId(userId)
+          .raffleId(raffleId)
+          .point(point)
+          .value(value);
    }
 }

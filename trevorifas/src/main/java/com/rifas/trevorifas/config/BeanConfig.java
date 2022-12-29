@@ -4,14 +4,18 @@ import com.rifas.trevorifas.application.core.usecases.AuthUseCase;
 import com.rifas.trevorifas.application.core.usecases.CreatePointUseCase;
 import com.rifas.trevorifas.application.core.usecases.CreateRaffleUseCase;
 import com.rifas.trevorifas.application.core.usecases.CreateUserUseCase;
+import com.rifas.trevorifas.application.core.usecases.FindPointUseCase;
 import com.rifas.trevorifas.application.ports.in.auth.AuthUseCasePort;
 import com.rifas.trevorifas.application.ports.in.points.CreatePointUseCasePort;
+import com.rifas.trevorifas.application.ports.in.points.FindPointUseCasePort;
 import com.rifas.trevorifas.application.ports.in.raffles.CreateRaffleUseCasePort;
 import com.rifas.trevorifas.application.ports.in.users.CreateUserUseCasePort;
 import com.rifas.trevorifas.application.ports.out.auth.AuthAdapterPort;
 import com.rifas.trevorifas.application.ports.out.points.CreatePointAdapterPort;
+import com.rifas.trevorifas.application.ports.out.points.FindPointByRaffleIdAdapterPort;
 import com.rifas.trevorifas.application.ports.out.profiles.FindProfileAdapterPort;
 import com.rifas.trevorifas.application.ports.out.raffles.CreateRaffleAdapterPort;
+import com.rifas.trevorifas.application.ports.out.raffles.FindRaffleByIdAdapterPort;
 import com.rifas.trevorifas.application.ports.out.users.CreateUserAdapterPort;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -27,18 +31,27 @@ public class BeanConfig {
   }
 
   @Bean
-  public AuthUseCasePort authUseCasePort( AuthAdapterPort authAdapterPort){
+  public AuthUseCasePort authUseCasePort(AuthAdapterPort authAdapterPort) {
     return new AuthUseCase(authAdapterPort);
   }
 
   @Bean
-  public CreatePointUseCasePort createPointUseCasePort(CreatePointAdapterPort createPointAdapterPort){
+  public CreatePointUseCasePort createPointUseCasePort(
+      CreatePointAdapterPort createPointAdapterPort) {
     return new CreatePointUseCase(createPointAdapterPort);
   }
 
   @Bean
   public CreateRaffleUseCasePort createRaffleUseCasePort(
-      CreateRaffleAdapterPort createRaffleAdapterPort){
+      CreateRaffleAdapterPort createRaffleAdapterPort) {
     return new CreateRaffleUseCase(createRaffleAdapterPort);
   }
+
+  @Bean
+  public FindPointUseCasePort findPointUseCasePort(
+      FindPointByRaffleIdAdapterPort findPointByRaffleIdAdapterPor,
+      FindRaffleByIdAdapterPort findRaffleByIdAdapterPort) {
+    return new FindPointUseCase(findPointByRaffleIdAdapterPor, findRaffleByIdAdapterPort);
+  }
+
 }

@@ -1,5 +1,9 @@
 package com.rifas.trevorifas.config;
 
+import com.rifas.trevorifas.adapters.outbound.repositories.auth.AuthAdapter;
+import com.rifas.trevorifas.application.ports.out.auth.AuthAdapterPort;
+import com.rifas.trevorifas.security.jwt.JwtAuthFilter;
+import com.rifas.trevorifas.security.jwt.JwtService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
@@ -13,15 +17,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import com.rifas.trevorifas.security.jwt.JwtAuthFilter;
-import com.rifas.trevorifas.security.jwt.JwtService;
-import com.rifas.trevorifas.service.impl.UsuarioServiceImpl;
-
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
   @Autowired
-  private UsuarioServiceImpl usuarioService;
+  private AuthAdapter authAdapterPort;
 
   @Autowired
   private JwtService jwtService;
@@ -33,14 +33,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
   @Bean
   public OncePerRequestFilter jwtFilter() {
-    return new JwtAuthFilter(jwtService, usuarioService);
+    return new JwtAuthFilter(jwtService, authAdapterPort);
 
   }
 
   @Override
   protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 
-    auth.userDetailsService(usuarioService).passwordEncoder(passwordEncoder());
+    auth.userDetailsService(authAdapterPort).passwordEncoder(passwordEncoder());
   }
 
   private static final String[] AUTH_WHITE_LIST = {

@@ -19,7 +19,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 @Component
-public class AuthAdapter implements AuthAdapterPort {
+public class AuthAdapter implements AuthAdapterPort, UserDetailsService {
 
   private final FindUserAdapterPort findUserAdapterPort;
   private final PasswordEncoder encoder;

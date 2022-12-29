@@ -1,10 +1,11 @@
 package com.rifas.trevorifas.application.core.domain;
 
-import com.rifas.trevorifas.adapters.outbound.repositories.entity.RaffleEntity;
+import com.rifas.trevorifas.adapters.outbound.repositories.entity.PointEntity;
 import com.rifas.trevorifas.application.core.domain.enums.EnumRifa;
 
 public class Raffle {
 
+  private Long id;
   private Integer userId;
 
   private String raffleDate;
@@ -20,13 +21,17 @@ public class Raffle {
 
   private Integer pointQuantity;
 
-  private Raffle() {
+  public Raffle() {
   }
 
   public static Raffle builder() {
     return new Raffle();
   }
 
+  public Raffle id(Long id) {
+    this.id = id;
+    return this;
+  }
 
   public Raffle userId(Integer userId) {
     this.userId = userId;
@@ -68,6 +73,8 @@ public class Raffle {
     return this;
   }
 
+  public Long getId() {return id;}
+
   public Integer getUserId() {
     return userId;
   }
@@ -99,6 +106,7 @@ public class Raffle {
   public Integer getPointQuantity() {
     return pointQuantity;
   }
+
 }
 
 
