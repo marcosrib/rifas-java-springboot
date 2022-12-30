@@ -10,7 +10,7 @@ import lombok.Setter;
 @Setter
 public class UserResponse {
 
-  private Integer id;
+  private Long id;
   private String name;
   private String email;
   private Set<Profile> profiles;
@@ -19,7 +19,7 @@ public class UserResponse {
 
   }
 
-  public UserResponse(Integer id, String name, String email,
+  public UserResponse(Long id, String name, String email,
       Set<Profile> profiles) {
     this.id = id;
     this.name = name;

@@ -11,7 +11,7 @@ import lombok.Setter;
 public class PointResponse {
 
   private Long id;
-  private Integer userId;
+  private Long userId;
 
   private Long raffleId;
 
@@ -25,7 +25,7 @@ public class PointResponse {
 
   private LocalDateTime updateAt;
 
-  public PointResponse(Long id, Integer userId, Long raffleId, String point, BigDecimal value,
+  public PointResponse(Long id, Long userId, Long raffleId, String point, BigDecimal value,
       LocalDateTime createAt, LocalDateTime updateAt, boolean pointSelected) {
     this.id = id;
     this.userId = userId;

@@ -1,6 +1,6 @@
 package com.rifas.trevorifas.controller.dto;
 
-import com.rifas.trevorifas.application.core.domain.enums.EnumRifa;
+import com.rifas.trevorifas.application.core.domain.enums.EnumRaffle;
 
 import lombok.Data;
 
@@ -19,7 +19,7 @@ public class RifaDTO {
 	
 	private String valor;
 	
-	private EnumRifa tipoRifa;
+	private EnumRaffle tipoRifa;
 
 	private Integer quantidadePonto;
 }

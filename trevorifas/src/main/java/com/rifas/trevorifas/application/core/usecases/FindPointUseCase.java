@@ -5,6 +5,7 @@ import com.rifas.trevorifas.application.core.domain.Raffle;
 import com.rifas.trevorifas.application.ports.in.points.FindPointUseCasePort;
 import com.rifas.trevorifas.application.ports.out.points.FindPointByRaffleIdAdapterPort;
 import com.rifas.trevorifas.application.ports.out.raffles.FindRaffleByIdAdapterPort;
+import com.rifas.trevorifas.common.util.FormatNumber;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -38,16 +39,12 @@ public class FindPointUseCase implements FindPointUseCasePort {
       return Point.builder().point(String.valueOf(point));
     }).collect(Collectors.toList());
 
-
   }
 
 
   private Optional<Point> filterPointByPointId(List<Point> points, int point) {
     return points.stream()
-        .filter(p -> p.getPoint().equals(addZeroLeft(point))).findAny();
+        .filter(p -> p.getPoint().equals(FormatNumber.addZeroLeft(point))).findAny();
   }
 
-  private String addZeroLeft(int numero) {
-    return (numero < 10) ? "0" + numero : String.valueOf(numero);
-  }
 }

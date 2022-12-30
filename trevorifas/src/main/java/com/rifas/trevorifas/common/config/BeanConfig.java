@@ -1,4 +1,4 @@
-package com.rifas.trevorifas.config;
+package com.rifas.trevorifas.common.config;
 
 import com.rifas.trevorifas.application.core.usecases.AuthUseCase;
 import com.rifas.trevorifas.application.core.usecases.CreatePointUseCase;

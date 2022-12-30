@@ -18,6 +18,6 @@ private final ProfileRepository profileRepository;
 
   @Override
   public Set<Profile> findProfileByNameIn(List<String> profiles) {
-    return Profile.convertProfileEntityToProfile(profileRepository.findByNomeIn(profiles));
+    return Profile.convertProfileEntityToProfile(profileRepository.findByNameIn(profiles));
   }
 }

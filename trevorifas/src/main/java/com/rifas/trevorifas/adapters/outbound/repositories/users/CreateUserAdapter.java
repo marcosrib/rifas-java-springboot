@@ -23,15 +23,15 @@ public class CreateUserAdapter implements CreateUserAdapterPort {
     user.getProfiles().forEach(p -> {
       ProfileEntity profileEntity = new ProfileEntity();
       profileEntity.setId(p.getId());
-      profileEntity.setNome(p.getName());
+      profileEntity.setName(p.getName());
       profiles.add(profileEntity);
     });
 
     UserEntity userEntity = UserEntity
         .builder()
-        .nome(user.getName())
+        .name(user.getName())
         .email(user.getEmail())
-        .senha(user.getPassword())
+        .password(user.getPassword())
         .profiles(profiles)
         .build();
      UserEntity resUserEntity =  userRepository.save(userEntity);

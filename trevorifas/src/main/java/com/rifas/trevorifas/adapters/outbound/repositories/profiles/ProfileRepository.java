@@ -10,5 +10,5 @@ import com.rifas.trevorifas.adapters.outbound.repositories.entity.ProfileEntity;
 
 public interface ProfileRepository extends JpaRepository<ProfileEntity, Integer> {
 	
-  Set<ProfileEntity> findByNomeIn(List<String> profile);
+  Set<ProfileEntity> findByNameIn(List<String> profile);
 }

@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.rifas.trevorifas.application.core.domain.enums.EnumRifa;
+import com.rifas.trevorifas.application.core.domain.enums.EnumRaffle;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -19,54 +19,54 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Table(name = "rifas")
+@Table(name = "raffles")
 public class RaffleEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @Column(name = "data_criacao", nullable = false)
-  private LocalDateTime createAt;
+  @Column(name = "created_at", nullable = false)
+  private LocalDateTime createdAt;
 
 
-  @Column(name = "data_atualizacao")
-  private LocalDateTime updateAt;
+  @Column(name = "updated_at")
+  private LocalDateTime updatedAt;
 
-  @Column(name = "data_sorteio", nullable = false)
+  @Column(name = "raffle_date", nullable = false)
   private LocalDateTime raffleDate;
 
-  @Column(name = "descricao", nullable = false)
+  @Column(name = "description", nullable = false)
   private String description;
 
-  @Column(name = "titulo", length = 50, nullable = false)
+  @Column(name = "title", length = 50, nullable = false)
   private String title;
-  @Column(name = "imagem")
+  @Column(name = "image_name")
   private String imageName;
 
-  @Column(name = "quantidade_ponto", length = 10, nullable = false)
+  @Column(name = "point_quantity", length = 10, nullable = false)
   private Integer pointQuantity;
 
-  @Column(name = "valor", precision = 10, scale = 2, nullable = false)
+  @Column(name = "valuer", precision = 10, scale = 2, nullable = false)
   private BigDecimal value;
 
   @Enumerated(EnumType.STRING)
-  @Column(name = "tipo_rifa", length = 50)
-  private EnumRifa typeRaffle;
+  @Column(name = "type_raffle", length = 50)
+  private EnumRaffle typeRaffle;
 
   @JsonIgnore
   @ManyToOne(optional = false)
-  @JoinColumn(name = "usuario_id", nullable = false)
+  @JoinColumn(name = "user_id", nullable = false)
   private UserEntity userEntity;
 
   @PrePersist
   public void prePersist() {
-    createAt = LocalDateTime.now();
+    createdAt = LocalDateTime.now();
   }
 
   @PreUpdate
   public void preUpdate() {
-    updateAt = LocalDateTime.now();
+    updatedAt = LocalDateTime.now();
   }
 
 }

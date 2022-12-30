@@ -9,13 +9,15 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Where;
 
 @Entity
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "pontos")
+@Table(name = "points")
+@Where(clause = "deleted_at is null")
 public class PointEntity {
 
   @Id
@@ -23,36 +25,39 @@ public class PointEntity {
   private Long id;
 
   @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "usuario_id")
+  @JoinColumn(name = "user_id")
   private UserEntity user;
 
   @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "rifa_id")
+  @JoinColumn(name = "raffle_id")
   private RaffleEntity raffle;
 
-  @Column(name = "ponto",length = 10, nullable = false)
+  @Column(name = "point",length = 10, nullable = false)
   private String point;
 
-  @Column(name = "valor", precision = 10, scale = 2, nullable = false)
+  @Column(name = "value", precision = 10, scale = 2, nullable = false)
   private BigDecimal value;
 
-  @Column(name = "ponto_escolhido", nullable = false)
+  @Column(name = "point_selected", nullable = false)
   private boolean pointSelected;
 
-  @Column(name = "data_criacao")
-  private LocalDateTime createAt;
+  @Column(name = "create_at")
+  private LocalDateTime createdAt;
 
-  @Column(name = "data_atualizacao")
-  private LocalDateTime updateAt;
+  @Column(name = "updated_at")
+  private LocalDateTime updatedAt;
+
+  @Column(name = "deleted_at")
+  private LocalDateTime deletedAt;
 
   @PrePersist
   public void prePersist() {
-    createAt = LocalDateTime.now();
+    createdAt = LocalDateTime.now();
   }
 
   @PreUpdate
   public void preUpdate() {
-    updateAt = LocalDateTime.now();
+    updatedAt = LocalDateTime.now();
   }
 
 }

@@ -1,6 +1,6 @@
 package com.rifas.trevorifas.service.files.impl;
 
-import com.rifas.trevorifas.config.FileStorageConfig;
+import com.rifas.trevorifas.common.config.FileStorageConfig;
 import com.rifas.trevorifas.exception.ArmazenamentoArquivoException;
 import com.rifas.trevorifas.exception.RegraNegocioException;
 import com.rifas.trevorifas.service.files.service.FileStorageService;

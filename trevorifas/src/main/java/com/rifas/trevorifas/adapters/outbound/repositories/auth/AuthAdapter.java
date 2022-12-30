@@ -51,10 +51,10 @@ public class AuthAdapter implements AuthAdapterPort, UserDetailsService {
         .orElseThrow(() -> new UsernameNotFoundException("Usuario não encontrado"));
     List<String> listRoles = new ArrayList<>();
 
-    userEntity.getProfiles().forEach(role -> listRoles.add(role.getNome()));
+    userEntity.getProfiles().forEach(role -> listRoles.add(role.getName().toString()));
     String[] roles = listRoles.stream().toArray(n -> new String[n]);
 
     return org.springframework.security.core.userdetails.User.builder()
-        .username(userEntity.getEmail()).password(userEntity.getSenha()).roles(roles).build();
+        .username(userEntity.getEmail()).password(userEntity.getPassword()).roles(roles).build();
   }
 }

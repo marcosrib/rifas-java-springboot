@@ -1,5 +1,5 @@
 package com.rifas.trevorifas.application.core.domain.enums;
 
-public enum EnumRifa {
-  RIFA
+public enum EnumRaffle {
+  RAFFLE
 }

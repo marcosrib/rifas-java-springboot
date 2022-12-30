@@ -1,13 +1,14 @@
 package com.rifas.trevorifas.application.core.domain;
 
 import com.rifas.trevorifas.adapters.outbound.repositories.entity.PointEntity;
+import com.rifas.trevorifas.common.util.FormatNumber;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 public class Point {
 
   private Long id;
-  private Integer userId;
+  private Long userId;
 
   private Long raffleId;
 
@@ -32,7 +33,7 @@ public class Point {
       return this;
     }
 
-    public Point userId(Integer userId) {
+    public Point userId(Long userId) {
       this.userId = userId;
       return this;
     }
@@ -71,7 +72,7 @@ public class Point {
     return id;
   }
 
-  public Integer getUserId() {
+  public Long getUserId() {
     return userId;
   }
 
@@ -80,7 +81,7 @@ public class Point {
   }
 
   public String getPoint() {
-    return point;
+    return FormatNumber.addZeroLeft(Integer.parseInt(point));
   }
 
   public BigDecimal getValue() {
@@ -109,5 +110,6 @@ public class Point {
         .raffleId(point.getRaffle().getId())
         .value(point.getValue());
   }
+
 
 }

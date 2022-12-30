@@ -1,14 +1,14 @@
 package com.rifas.trevorifas.adapters.inbound.controllers.response;
 
 import com.rifas.trevorifas.application.core.domain.Raffle;
-import com.rifas.trevorifas.application.core.domain.enums.EnumRifa;
+import com.rifas.trevorifas.application.core.domain.enums.EnumRaffle;
 import lombok.Builder;
 import lombok.Data;
 
 @Data
 @Builder
 public class RaffleResponse {
-  private Integer userId;
+  private Long userId;
 
   private String raffleDate;
 
@@ -19,7 +19,7 @@ public class RaffleResponse {
 
   private String imageName;
 
-  private EnumRifa typeRaffle;
+  private EnumRaffle typeRaffle;
 
   private Integer pointQuantity;
   public static RaffleResponse fromDomain(Raffle raffle) {

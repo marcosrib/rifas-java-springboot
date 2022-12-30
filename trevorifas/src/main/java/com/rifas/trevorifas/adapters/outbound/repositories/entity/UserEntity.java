@@ -1,5 +1,6 @@
 package com.rifas.trevorifas.adapters.outbound.repositories.entity;
 
+import com.rifas.trevorifas.application.core.domain.enums.EnumStatus;
 import java.time.LocalDateTime;
 import java.util.Set;
 
@@ -10,6 +11,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Where;
 
 @Builder
 @AllArgsConstructor
@@ -17,42 +19,53 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "usuarios")
+@Table(name = "users")
+@Where(clause = "status =  ACTIVATED")
 public class UserEntity {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
 
-	@Column(name = "nome", length = 100, nullable = false)
-	private String nome;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
 
-	@Column(name = "email", length = 100, nullable = false, unique = true)
-	private String email;
+  @Column(name = "name", length = 100, nullable = false)
+  private String name;
 
-	@Column(name = "senha", nullable = false)
-	private String senha;
+  @Column(name = "username", length = 100, nullable = false)
+  private String username;
 
-	@OneToMany(mappedBy = "userEntity", cascade = CascadeType.ALL)
-	private Set<RaffleEntity> rifas;
 
-	@ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
-	@JoinTable(name = "usuario_perfil", joinColumns = @JoinColumn(name = "usuario_id"), inverseJoinColumns = @JoinColumn(name = "perfil_id"))
-	private Set<ProfileEntity> profiles;
+  @Column(name = "email", length = 100, nullable = false, unique = true)
+  private String email;
 
-	@Column(name = "data_criacao")
-	private LocalDateTime dataCriacao;
+  @Column(name = "password", nullable = false)
+  private String password;
+  @Column(name = "status")
+  @Enumerated(value = EnumType.STRING)
+  private EnumStatus status;
+  @OneToMany(mappedBy = "userEntity", cascade = CascadeType.ALL)
+  private Set<RaffleEntity> raffles;
 
-	@Column(name = "data_atualizacao")
-	private LocalDateTime dataAtualizacao;
+  @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+  @JoinTable(name = "user_profiles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "profile_id"))
+  private Set<ProfileEntity> profiles;
 
-	@PrePersist
-	public void prePersist() {
-		dataCriacao = LocalDateTime.now();
-	}
+  @Column(name = "created_at")
+  private LocalDateTime createdAt;
 
-	@PreUpdate
-	public void preUpdate() {
-		dataCriacao = LocalDateTime.now();
-	}
+  @Column(name = "updated_at")
+  private LocalDateTime updated_at;
+
+  @Column(name = "deleted_at")
+  private LocalDateTime deletedAt;
+
+  @PrePersist
+  public void prePersist() {
+    createdAt = LocalDateTime.now();
+  }
+
+  @PreUpdate
+  public void preUpdate() {
+    updated_at = LocalDateTime.now();
+  }
 
 }

@@ -27,8 +27,8 @@ private List<Point> convertListPointEntityToPoint(List<PointEntity> points) {
         .pointSelected(pointEntity.isPointSelected())
         .id(pointEntity.getId())
         .raffleId(pointEntity.getRaffle().getId())
-        .createAt(pointEntity.getCreateAt())
-        .updateAt(pointEntity.getUpdateAt())
+        .createAt(pointEntity.getCreatedAt())
+        .updateAt(pointEntity.getUpdatedAt())
         .userId(pointEntity.getUser().getId())
     ).collect(Collectors.toList());
 }

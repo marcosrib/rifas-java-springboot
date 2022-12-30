@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 
 public class User {
 
-  private Integer id;
+  private Long id;
   private String name;
   private String email;
   private String password;
@@ -23,7 +23,7 @@ public class User {
     this.profiles = profiles;
   }
 
-  public User(Integer id, String name, String email, String password, Set<Profile> profiles) {
+  public User(Long id, String name, String email, String password, Set<Profile> profiles) {
     this.id = id;
     this.name = name;
     this.email = email;
@@ -31,11 +31,11 @@ public class User {
     this.profiles = profiles;
   }
 
-  public Integer getId() {
+  public Long getId() {
     return id;
   }
 
-  public void setId(Integer id) {
+  public void setId(Long id) {
     this.id = id;
   }
 
@@ -73,9 +73,9 @@ public class User {
 
   public static User convertUserEntitytoUser(UserEntity userEntity) {
     Set<Profile> profiles = userEntity.getProfiles().stream()
-        .map(profileEntity -> new Profile(profileEntity.getId(), profileEntity.getNome())).collect(
+        .map(profileEntity -> new Profile(profileEntity.getId(), profileEntity.getName())).collect(
             Collectors.toSet());
-    return new User(userEntity.getId(), userEntity.getNome(), userEntity.getEmail(),
-        userEntity.getSenha(), profiles);
+    return new User(userEntity.getId(), userEntity.getName(), userEntity.getEmail(),
+        userEntity.getPassword(), profiles);
   }
 }

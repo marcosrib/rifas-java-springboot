@@ -15,11 +15,11 @@ public class FindPointResponse {
 
   private Long pointId;
   private String point;
-  private Integer userId;
+  private Long userId;
   private BigDecimal value;
   private boolean pointSelected;
 
-  public static List<FindPointResponse> convertListPointDomainToLisResponse(List<Point> points) {
+  public static List<FindPointResponse> convertListPointDomainToListResponse(List<Point> points) {
     return points.stream().map(
         point -> new FindPointResponse(point.getId(), point.getPoint(), point.getUserId(),
             point.getValue(), point.isPointSelected())).collect(

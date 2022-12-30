@@ -31,6 +31,6 @@ public class PointController implements PointApi {
     @GetMapping("{raffleId}")
     @ResponseStatus(HttpStatus.OK)
     public List<FindPointResponse> findPoint(@PathVariable Long raffleId) {
-        return FindPointResponse.convertListPointDomainToLisResponse(findPointUseCasePort.findPointsByIdRaffle(raffleId));
+        return FindPointResponse.convertListPointDomainToListResponse(findPointUseCasePort.findPointsByIdRaffle(raffleId));
     }
 }

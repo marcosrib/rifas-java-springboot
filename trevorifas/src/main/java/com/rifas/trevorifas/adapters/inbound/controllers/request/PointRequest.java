@@ -9,7 +9,7 @@ public class PointRequest {
 	
    private String point;
    private Long raffleId;
-   private Integer userId;
+   private Long userId;
    private BigDecimal value;
 
 

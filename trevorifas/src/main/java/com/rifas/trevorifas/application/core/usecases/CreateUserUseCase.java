@@ -4,7 +4,7 @@ import com.rifas.trevorifas.application.core.domain.User;
 import com.rifas.trevorifas.application.ports.in.users.CreateUserUseCasePort;
 import com.rifas.trevorifas.application.ports.out.profiles.FindProfileAdapterPort;
 import com.rifas.trevorifas.application.ports.out.users.CreateUserAdapterPort;
-import com.rifas.trevorifas.application.core.domain.enums.EnumPerfil;
+import com.rifas.trevorifas.application.core.domain.enums.EnumProfile;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -27,9 +27,9 @@ public class CreateUserUseCase implements CreateUserUseCasePort {
   public User create(User user) {
     List<String> listProfilesName = new ArrayList<String>();
     if (!user.getProfiles().isEmpty()) {
-      user.getProfiles().forEach(profile -> listProfilesName.add(profile.getName()));
+      user.getProfiles().forEach(profile -> listProfilesName.add(profile.getName().toString()));
     } else {
-      listProfilesName.add(EnumPerfil.USER.toString());
+      listProfilesName.add(EnumProfile.USER.toString());
     }
     String encryptPassword = encoder.encode(user.getPassword());
     user.setPassword(encryptPassword);

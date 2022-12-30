@@ -1,6 +1,7 @@
 package com.rifas.trevorifas.application.core.domain;
 
 import com.rifas.trevorifas.adapters.outbound.repositories.entity.ProfileEntity;
+import com.rifas.trevorifas.application.core.domain.enums.EnumProfile;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -8,12 +9,12 @@ import java.util.stream.Collectors;
 public class Profile {
 
   private Integer id;
-  private String name;
+  private EnumProfile name;
 
   public Profile() {
   }
 
-  public Profile(Integer id, String name) {
+  public Profile(Integer id, EnumProfile name) {
     this.id = id;
     this.name = name;
   }
@@ -26,17 +27,17 @@ public class Profile {
     this.id = id;
   }
 
-  public String getName() {
+  public EnumProfile getName() {
     return name;
   }
 
-  public void setName(String name) {
+  public void setName(EnumProfile name) {
     this.name = name;
   }
 
   public static Set<Profile> convertProfileEntityToProfile(Set<ProfileEntity> profilesEntity) {
     return profilesEntity.stream()
-        .map(profile -> new Profile(profile.getId(), profile.getNome()))
+        .map(profile -> new Profile(profile.getId(), profile.getName()))
         .collect(Collectors.toSet());
   }
 }

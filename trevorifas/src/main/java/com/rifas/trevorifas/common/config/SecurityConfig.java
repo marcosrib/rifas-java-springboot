@@ -1,4 +1,4 @@
-package com.rifas.trevorifas.config;
+package com.rifas.trevorifas.common.config;
 
 import com.rifas.trevorifas.adapters.outbound.repositories.auth.AuthAdapter;
 import com.rifas.trevorifas.application.ports.out.auth.AuthAdapterPort;

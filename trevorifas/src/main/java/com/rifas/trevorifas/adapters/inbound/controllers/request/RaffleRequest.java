@@ -1,13 +1,13 @@
 package com.rifas.trevorifas.adapters.inbound.controllers.request;
 
 import com.rifas.trevorifas.application.core.domain.Raffle;
-import com.rifas.trevorifas.application.core.domain.enums.EnumRifa;
+import com.rifas.trevorifas.application.core.domain.enums.EnumRaffle;
 import lombok.Data;
 
 @Data
 public class RaffleRequest {
 
-  private Integer userId;
+  private Long userId;
 
   private String raffleDate;
 
@@ -16,7 +16,7 @@ public class RaffleRequest {
   private String title;
   private String value;
 
-  private EnumRifa typeRaffle;
+  private EnumRaffle typeRaffle;
 
   private Integer pointQuantity;
 
