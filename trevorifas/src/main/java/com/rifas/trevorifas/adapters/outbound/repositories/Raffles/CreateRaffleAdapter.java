@@ -20,19 +20,19 @@ public class CreateRaffleAdapter implements CreateRaffleAdapterPort {
 
   @Override
   public Raffle create(Raffle raffle) {
-   RaffleEntity raffleEntity =  RaffleEntity.builder()
+    RaffleEntity raffleEntity = RaffleEntity.builder()
         .raffleDate(LocalDateTime.now())
         .typeRaffle(raffle.getTypeRaffle())
         .title(raffle.getTitle())
         .value(new BigDecimal(raffle.getValue()))
         .pointQuantity(raffle.getPointQuantity())
-       .userEntity(UserEntity.builder().id(raffle.getUserId()).build())
-       .description(raffle.getDescription())
+        .userEntity(UserEntity.builder().id(raffle.getUserId()).build())
+        .description(raffle.getDescription())
         .build();
-    return  convertReffleEntityToRaffle(  repository.save(raffleEntity));
+    return convertReffleEntityToRaffle(repository.save(raffleEntity));
   }
 
-  private Raffle convertReffleEntityToRaffle(RaffleEntity  raffleEntity) {
+  private Raffle convertReffleEntityToRaffle(RaffleEntity raffleEntity) {
     return Raffle.builder()
         .userId(raffleEntity.getUserEntity().getId())
         .description(raffleEntity.getDescription())

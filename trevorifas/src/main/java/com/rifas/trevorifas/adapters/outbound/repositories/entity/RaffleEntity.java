@@ -4,6 +4,8 @@ import java.math.BigDecimal;
 
 import java.time.LocalDateTime;
 
+import java.util.List;
+import java.util.Set;
 import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -41,8 +43,8 @@ public class RaffleEntity {
 
   @Column(name = "title", length = 50, nullable = false)
   private String title;
-  @Column(name = "image_name")
-  private String imageName;
+  @OneToMany(mappedBy = "raffleEntity", cascade = CascadeType.ALL)
+  private List<FileEntity> files;
 
   @Column(name = "point_quantity", length = 10, nullable = false)
   private Integer pointQuantity;

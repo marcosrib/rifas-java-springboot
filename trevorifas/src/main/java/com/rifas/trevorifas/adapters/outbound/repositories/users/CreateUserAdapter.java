@@ -30,6 +30,7 @@ public class CreateUserAdapter implements CreateUserAdapterPort {
     UserEntity userEntity = UserEntity
         .builder()
         .name(user.getName())
+        .username(user.getUserName())
         .email(user.getEmail())
         .password(user.getPassword())
         .profiles(profiles)

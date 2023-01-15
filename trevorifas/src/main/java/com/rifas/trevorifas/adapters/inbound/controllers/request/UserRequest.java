@@ -13,13 +13,15 @@ public class UserRequest {
   private String email;
   private String password;
 
+  private String userName;
+
   private Set<Profile> profiles;
 
   public User toUserDomain() {
 
     Set<Profile> profilesList = new HashSet<>();
     profilesList.addAll(profiles);
-    return new User(name, email, password, profilesList);
+    return new User(name, email, password, profilesList, userName);
   }
 
 }

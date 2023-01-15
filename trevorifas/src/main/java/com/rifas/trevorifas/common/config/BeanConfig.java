@@ -1,16 +1,20 @@
 package com.rifas.trevorifas.common.config;
 
 import com.rifas.trevorifas.application.core.usecases.AuthUseCase;
+import com.rifas.trevorifas.application.core.usecases.CreateImageUseCase;
 import com.rifas.trevorifas.application.core.usecases.CreatePointUseCase;
 import com.rifas.trevorifas.application.core.usecases.CreateRaffleUseCase;
 import com.rifas.trevorifas.application.core.usecases.CreateUserUseCase;
 import com.rifas.trevorifas.application.core.usecases.FindPointUseCase;
 import com.rifas.trevorifas.application.ports.in.auth.AuthUseCasePort;
+import com.rifas.trevorifas.application.ports.in.images.CreateImageUseCasePort;
 import com.rifas.trevorifas.application.ports.in.points.CreatePointUseCasePort;
 import com.rifas.trevorifas.application.ports.in.points.FindPointUseCasePort;
 import com.rifas.trevorifas.application.ports.in.raffles.CreateRaffleUseCasePort;
 import com.rifas.trevorifas.application.ports.in.users.CreateUserUseCasePort;
 import com.rifas.trevorifas.application.ports.out.auth.AuthAdapterPort;
+import com.rifas.trevorifas.application.ports.out.file.CreateFileAdapterPort;
+import com.rifas.trevorifas.application.ports.out.fileStorage.SaveFileLocalAdapterPort;
 import com.rifas.trevorifas.application.ports.out.points.CreatePointAdapterPort;
 import com.rifas.trevorifas.application.ports.out.points.FindPointByRaffleIdAdapterPort;
 import com.rifas.trevorifas.application.ports.out.profiles.FindProfileAdapterPort;
@@ -53,5 +57,12 @@ public class BeanConfig {
       FindRaffleByIdAdapterPort findRaffleByIdAdapterPort) {
     return new FindPointUseCase(findPointByRaffleIdAdapterPor, findRaffleByIdAdapterPort);
   }
+
+  @Bean
+  public CreateImageUseCasePort createImageUseCasePort(
+      SaveFileLocalAdapterPort saveFileLocalAdapterPort, CreateFileAdapterPort createFileAdapterPort) {
+    return new CreateImageUseCase(saveFileLocalAdapterPort, createFileAdapterPort);
+  }
+
 
 }
