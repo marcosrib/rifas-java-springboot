@@ -14,7 +14,7 @@ import com.rifas.trevorifas.application.ports.in.raffles.CreateRaffleUseCasePort
 import com.rifas.trevorifas.application.ports.in.users.CreateUserUseCasePort;
 import com.rifas.trevorifas.application.ports.out.auth.AuthAdapterPort;
 import com.rifas.trevorifas.application.ports.out.file.CreateFileAdapterPort;
-import com.rifas.trevorifas.application.ports.out.fileStorage.SaveFileLocalAdapterPort;
+import com.rifas.trevorifas.application.ports.out.fileStorage.FileAdapterPort;
 import com.rifas.trevorifas.application.ports.out.points.CreatePointAdapterPort;
 import com.rifas.trevorifas.application.ports.out.points.FindPointByRaffleIdAdapterPort;
 import com.rifas.trevorifas.application.ports.out.profiles.FindProfileAdapterPort;
@@ -60,7 +60,7 @@ public class BeanConfig {
 
   @Bean
   public CreateImageUseCasePort createImageUseCasePort(
-      SaveFileLocalAdapterPort saveFileLocalAdapterPort, CreateFileAdapterPort createFileAdapterPort) {
+          FileAdapterPort saveFileLocalAdapterPort, CreateFileAdapterPort createFileAdapterPort) {
     return new CreateImageUseCase(saveFileLocalAdapterPort, createFileAdapterPort);
   }
 
